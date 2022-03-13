@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/atrush/diploma.git/internal/api/handler"
+	"github.com/atrush/diploma.git/api/handler"
 	"github.com/go-chi/chi/v5"
 )
 

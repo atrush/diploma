@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/atrush/diploma.git/internal/api/handler"
+	"github.com/atrush/diploma.git/api/handler"
 	"net/http"
 )
 

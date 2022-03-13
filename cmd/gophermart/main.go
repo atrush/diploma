@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/atrush/diploma.git/internal/api"
+	"github.com/atrush/diploma.git/api"
 	"log"
 	"os"
 	"os/signal"
