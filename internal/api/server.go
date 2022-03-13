@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/atrush/diploma.git/internal/api/handler"
 	"net/http"
 )
 
@@ -12,7 +13,7 @@ type Server struct {
 }
 
 func NewServer() (*Server, error) {
-	h, err := NewHandler()
+	h, err := handler.NewHandler()
 	if err != nil {
 		return nil, fmt.Errorf("error init server:%w", err)
 	}

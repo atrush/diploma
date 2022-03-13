@@ -1,10 +1,11 @@
 package api
 
 import (
+	"github.com/atrush/diploma.git/internal/api/handler"
 	"github.com/go-chi/chi/v5"
 )
 
-func NewRouter(handler *Handler) *chi.Mux {
+func NewRouter(handler *handler.Handler) *chi.Mux {
 	r := chi.NewRouter()
 	// POST /api/user/register — регистрация пользователя;
 	r.Post("/api/user/register", handler.Ok)
