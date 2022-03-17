@@ -3,8 +3,6 @@ package api
 import (
 	"context"
 	"errors"
-	"fmt"
-	"github.com/atrush/diploma.git/api/handler"
 	"net/http"
 )
 
@@ -13,14 +11,15 @@ type Server struct {
 }
 
 func NewServer() (*Server, error) {
-	h, err := handler.NewHandler()
-	if err != nil {
-		return nil, fmt.Errorf("error init server:%w", err)
-	}
+
+	//h, err := NewHandler()
+	//if err != nil {
+	//	return nil, fmt.Errorf("error init server:%w", err)
+	//}
 	return &Server{
 		httpServer: http.Server{
 			Addr:    "8081",
-			Handler: NewRouter(h),
+			Handler: NewRouter(nil),
 		},
 	}, nil
 }
