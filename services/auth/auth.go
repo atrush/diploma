@@ -7,6 +7,7 @@ import (
 	"github.com/atrush/diploma.git/model"
 	"github.com/atrush/diploma.git/storage"
 	"github.com/go-chi/jwtauth/v5"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -71,8 +72,8 @@ func (a *Auth) Authenticate(ctx context.Context, login string, password string) 
 }
 
 //  EncodeTokenUserID encodes token with user_id claim.
-func (a *Auth) EncodeTokenUserID(userID uint64) (string, error) {
-	_, tokenString, err := a.tokenAuth.Encode(map[string]interface{}{"user_id": userID})
+func (a *Auth) EncodeTokenUserID(userID uuid.UUID) (string, error) {
+	_, tokenString, err := a.tokenAuth.Encode(map[string]interface{}{"user_id": userID.String()})
 	if err != nil {
 		return "", fmt.Errorf("ошибка генерации токена для пользователя: %w", err)
 	}

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/atrush/diploma.git/services/auth"
+	"github.com/google/uuid"
 	"net/http"
 )
 
@@ -94,7 +95,7 @@ func (h Handler) readLoginRequest(w http.ResponseWriter, r *http.Request) (Login
 }
 
 //  setToken sets jwt token with user_id claim to response.
-func (h Handler) setToken(w http.ResponseWriter, userID uint64) error {
+func (h Handler) setToken(w http.ResponseWriter, userID uuid.UUID) error {
 	//  encode token with user_id claim.
 	token, err := h.svcAuth.EncodeTokenUserID(userID)
 	if err != nil {

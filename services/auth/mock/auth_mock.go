@@ -9,8 +9,8 @@ import (
 	reflect "reflect"
 
 	model "github.com/atrush/diploma.git/model"
-	jwtauth "github.com/go-chi/jwtauth/v5"
 	gomock "github.com/golang/mock/gomock"
+	uuid "github.com/google/uuid"
 )
 
 // MockAuthenticator is a mock of Authenticator interface.
@@ -67,7 +67,7 @@ func (mr *MockAuthenticatorMockRecorder) CreateUser(ctx, login, password interfa
 }
 
 // EncodeTokenUserID mocks base method.
-func (m *MockAuthenticator) EncodeTokenUserID(userID uint64) (string, error) {
+func (m *MockAuthenticator) EncodeTokenUserID(userID uuid.UUID) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "EncodeTokenUserID", userID)
 	ret0, _ := ret[0].(string)
@@ -79,18 +79,4 @@ func (m *MockAuthenticator) EncodeTokenUserID(userID uint64) (string, error) {
 func (mr *MockAuthenticatorMockRecorder) EncodeTokenUserID(userID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EncodeTokenUserID", reflect.TypeOf((*MockAuthenticator)(nil).EncodeTokenUserID), userID)
-}
-
-// TokenAuth mocks base method.
-func (m *MockAuthenticator) TokenAuth() *jwtauth.JWTAuth {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "TokenAuth")
-	ret0, _ := ret[0].(*jwtauth.JWTAuth)
-	return ret0
-}
-
-// TokenAuth indicates an expected call of TokenAuth.
-func (mr *MockAuthenticatorMockRecorder) TokenAuth() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TokenAuth", reflect.TypeOf((*MockAuthenticator)(nil).TokenAuth))
 }

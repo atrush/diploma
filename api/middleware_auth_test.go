@@ -2,15 +2,15 @@ package api
 
 import (
 	"github.com/go-chi/jwtauth/v5"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 	"net/http"
-	"strconv"
 	"testing"
 )
 
 //  TestHandler_Login tests user register handler
 func TestMiddlewareAuth(t *testing.T) {
-	var userID uint64 = 12345
+	userID := uuid.New()
 
 	//  jwtauth init
 	tokenAuth := jwtauth.New("HS256", []byte("secret"), nil)
@@ -31,7 +31,7 @@ func TestMiddlewareAuth(t *testing.T) {
 			method:         http.MethodPost,
 			headers:        map[string]string{"Authorization": "Bearer " + tokenString},
 
-			expectedBody: "12345",
+			expectedBody: userID.String(),
 			expectedCode: 200,
 		},
 		{
@@ -41,7 +41,7 @@ func TestMiddlewareAuth(t *testing.T) {
 			method:         http.MethodGet,
 			headers:        map[string]string{"Authorization": "Bearer " + tokenString},
 
-			expectedBody: "12345",
+			expectedBody: userID.String(),
 			expectedCode: 200,
 		},
 		{
@@ -84,13 +84,12 @@ type writeUserIDToBody struct {
 }
 
 func (wr writeUserIDToBody) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	ctxID := r.Context().Value(ContextKeyUserID)
-	require.NotNil(wr.t, ctxID)
+	ctxID := r.Context().Value(ContextKeyUserID).(string)
+	require.NotEmpty(wr.t, ctxID)
 
-	float64UserID := ctxID.(float64)
-
-	userID := uint64(float64UserID)
+	userID, err := uuid.Parse(ctxID)
+	require.NoError(wr.t, err)
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(strconv.FormatUint(userID, 10)))
+	w.Write([]byte(userID.String()))
 }

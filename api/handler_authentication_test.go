@@ -6,13 +6,14 @@ import (
 	"github.com/atrush/diploma.git/services/auth"
 	mk "github.com/atrush/diploma.git/services/auth/mock"
 	"github.com/golang/mock/gomock"
+	"github.com/google/uuid"
 	"net/http"
 	"testing"
 )
 
 var (
 	mockUser = model.User{
-		ID:           122,
+		ID:           uuid.New(),
 		Login:        "user_1",
 		PasswordHash: "hash",
 	}
