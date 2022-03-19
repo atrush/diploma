@@ -3,7 +3,6 @@ package api
 import (
 	"bytes"
 	"github.com/atrush/diploma.git/services/auth"
-	"github.com/go-chi/jwtauth/v5"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"io"
@@ -29,7 +28,7 @@ type TestRoute struct {
 //  CheckTest runs handler, builds request and checks response values
 func (tt *TestRoute) CheckTest(t *testing.T) {
 	//  new handler with mock services
-	h, err := NewHandler(tt.svcAuth, jwtauth.New("HS256", []byte("secret"), nil))
+	h, err := NewHandler(tt.svcAuth)
 	require.NoError(t, err)
 
 	//  new router with handler

@@ -11,8 +11,8 @@ type Storage interface {
 	//  User returns repository for working with users.
 	User() UserRepository
 	//  Order returns repository for working with orders.
-	Order() OrderRepository
-	//  Close closes storage connection.
+	//Order() OrderRepository
+	////  Close closes storage connection.
 	Close()
 }
 
@@ -23,5 +23,5 @@ type UserRepository interface {
 	GetByLogin(ctx context.Context, login string) (model.User, error)
 }
 
-type OrderRepository interface {
+type orderRepository interface {
 }

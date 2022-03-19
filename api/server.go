@@ -3,6 +3,10 @@ package api
 import (
 	"context"
 	"errors"
+	"fmt"
+	"github.com/atrush/diploma.git/pkg"
+	"github.com/atrush/diploma.git/services/auth"
+	"github.com/atrush/diploma.git/storage"
 	"net/http"
 )
 
@@ -10,16 +14,22 @@ type Server struct {
 	httpServer http.Server
 }
 
-func NewServer() (*Server, error) {
+func NewServer(cfg *pkg.Config, s storage.Storage) (*Server, error) {
 
-	//h, err := NewHandler()
-	//if err != nil {
-	//	return nil, fmt.Errorf("error init server:%w", err)
-	//}
+	jwtAuth, err := auth.NewAuth(s)
+	if err != nil {
+		return nil, fmt.Errorf("ошибка запуска server:%w", err)
+	}
+
+	handler, err := NewHandler(jwtAuth)
+	if err != nil {
+		return nil, fmt.Errorf("ошибка запуска server:%w", err)
+	}
+
 	return &Server{
 		httpServer: http.Server{
-			Addr:    "8081",
-			Handler: NewRouter(nil),
+			Addr:    cfg.ServerAddress,
+			Handler: NewRouter(handler),
 		},
 	}, nil
 }

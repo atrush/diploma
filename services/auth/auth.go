@@ -36,6 +36,8 @@ func NewAuth(s storage.Storage) (*Auth, error) {
 //  If user exist, returns ErrorUserAlreadyExist.
 func (a *Auth) CreateUser(ctx context.Context, login string, password string) (model.User, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password+salt), 10)
+	l := len(hash)
+	fmt.Printf("length:%v", l)
 	if err != nil {
 		return model.User{}, fmt.Errorf("ошибка добавления пользователя: %w", err)
 	}
@@ -64,7 +66,7 @@ func (a *Auth) Authenticate(ctx context.Context, login string, password string) 
 		return model.User{}, fmt.Errorf("ошибка авторизации пользователя: %w", err)
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(password), []byte(salt)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password+salt)); err != nil {
 		return model.User{}, ErrorWrongAuthData
 	}
 

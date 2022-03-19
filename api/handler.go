@@ -2,23 +2,20 @@ package api
 
 import (
 	"github.com/atrush/diploma.git/services/auth"
-	"github.com/go-chi/jwtauth/v5"
 	"net/http"
 )
 
 type Handler struct {
-	svcAuth   auth.Authenticator
-	tokenAuth *jwtauth.JWTAuth
+	svcAuth auth.Authenticator
 }
 
 var ContextKeyUserID = contextKey("user-id")
 
 // NewHandler Return new handler
-func NewHandler(auth auth.Authenticator, t *jwtauth.JWTAuth) (*Handler, error) {
+func NewHandler(auth auth.Authenticator) (*Handler, error) {
 
 	return &Handler{
-		svcAuth:   auth,
-		tokenAuth: t,
+		svcAuth: auth,
 	}, nil
 }
 

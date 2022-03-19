@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/atrush/diploma.git/services/auth"
 	"github.com/google/uuid"
 	"net/http"
@@ -72,24 +73,19 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 
 }
 
-//  GetUserIDFromContext returns user id from context
-//  200 - returns user id in header 'userid'
-//  401 - if user id not founded in context
-//  500 - if iser id parsing error
-
 //  readLoginRequest reads login data from request.
 func (h Handler) readLoginRequest(w http.ResponseWriter, r *http.Request) (LoginRequest, error) {
 	var loginData LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&loginData); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 
-		return LoginRequest{}, err
+		return LoginRequest{}, fmt.Errorf("wrong data format")
 	}
 	defer r.Body.Close()
 	if err := loginData.Validate(); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 
-		return LoginRequest{}, err
+		return LoginRequest{}, fmt.Errorf("wrong data format")
 	}
 	return loginData, nil
 }

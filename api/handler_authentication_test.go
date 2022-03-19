@@ -90,7 +90,7 @@ func TestHandler_Login(t *testing.T) {
 			url:          "/api/user/login",
 			svcAuth:      authEmpty(ctrl),
 			headers:      map[string]string{"Content-Type": "application/json"},
-			body:         "{\"login: \"iamuser\",\"password\": \"\"}",
+			body:         "{\"login\": \"iamuser\",\"password\": \"\"}",
 			expectedCode: 400,
 		},
 	}
