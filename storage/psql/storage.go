@@ -3,6 +3,7 @@ package psql
 import (
 	"database/sql"
 	"github.com/atrush/diploma.git/storage"
+	"github.com/atrush/diploma.git/storage/psql/migrations"
 
 	"fmt"
 )
@@ -31,10 +32,12 @@ func NewStorage(conStringDSN string) (*Storage, error) {
 	if err := db.Ping(); err != nil {
 		return nil, err
 	}
-	if err := initBase(db); err != nil {
+	//if err := initBase(db); err != nil {
+	//	return nil, err
+	//}
+	if err := migrations.RunMigrations(db); err != nil {
 		return nil, err
 	}
-	//initMigrations(db, migrationsPath)
 
 	st := &Storage{
 		db:           db,
