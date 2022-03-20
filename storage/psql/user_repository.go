@@ -27,13 +27,12 @@ func newUserRepository(db *sql.DB) *userRepository {
 
 //  Save saves user to database.
 //  If login exist return ErrorConflictSaveUser
-func (r *userRepository) Create(ctx context.Context, login string, password string) (model.User, error) {
-	user := model.User{}
+func (r *userRepository) Create(ctx context.Context, user model.User) (model.User, error) {
 	err := r.db.QueryRowContext(
 		ctx,
-		"INSERT INTO users (login, passhash) VALUES ($1, $2) RETURNING id, login, passhash",
-		login,
-		password,
+		"INSERT INTO users (login, pass_hash) VALUES ($1, $2) RETURNING id, login, passhash",
+		user.Login,
+		user.PasswordHash,
 	).Scan(&user.ID, &user.Login, &user.PasswordHash)
 
 	if err != nil {
@@ -55,7 +54,7 @@ func (s *userRepository) GetByLogin(ctx context.Context, login string) (model.Us
 	var user model.User
 
 	if err := s.db.QueryRowContext(ctx,
-		`SELECT id, login, passhash FROM users WHERE login = $1`,
+		`SELECT id, login, pass_hash FROM users WHERE login = $1`,
 		login,
 	).Scan(&user.ID, &user.Login, &user.PasswordHash); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
