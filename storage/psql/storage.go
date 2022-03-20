@@ -44,7 +44,7 @@ func NewStorage(conStringDSN string) (*Storage, error) {
 		conStringDSN: conStringDSN,
 	}
 
-	//st.shortURLRepo = newShortURLRepository(db)
+	st.orderRepo = newOrderRepository(db)
 	st.userRepo = newUserRepository(db)
 
 	return st, nil
@@ -57,7 +57,7 @@ func (s *Storage) User() storage.UserRepository {
 
 //  Order returns users repository.
 func (s *Storage) Order() storage.OrderRepository {
-	return s.Order()
+	return s.orderRepo
 }
 
 //  Close  closes database connection.

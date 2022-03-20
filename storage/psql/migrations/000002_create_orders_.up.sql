@@ -5,5 +5,5 @@ CREATE TABLE IF NOT EXISTS orders
     number     varchar,
     uploaded_at  TIMESTAMP,
     status       varchar,
-    accrual      int,
+    accrual      int
 );

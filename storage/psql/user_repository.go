@@ -30,7 +30,7 @@ func newUserRepository(db *sql.DB) *userRepository {
 func (r *userRepository) Create(ctx context.Context, user model.User) (model.User, error) {
 	err := r.db.QueryRowContext(
 		ctx,
-		"INSERT INTO users (login, pass_hash) VALUES ($1, $2) RETURNING id, login, passhash",
+		"INSERT INTO users (login, pass_hash) VALUES ($1, $2) RETURNING id, login, pass_hash",
 		user.Login,
 		user.PasswordHash,
 	).Scan(&user.ID, &user.Login, &user.PasswordHash)

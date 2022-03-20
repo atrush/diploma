@@ -3,6 +3,7 @@ package psql
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"github.com/atrush/diploma.git/model"
 	"github.com/atrush/diploma.git/storage"
 	"github.com/google/uuid"
@@ -16,8 +17,8 @@ type orderRepository struct {
 }
 
 //  newOrderRepository inits new order repository.
-func newOrderRepository(db *sql.DB) *userRepository {
-	return &userRepository{
+func newOrderRepository(db *sql.DB) *orderRepository {
+	return &orderRepository{
 		db: db,
 	}
 }
@@ -37,11 +38,13 @@ func (r *orderRepository) Create(ctx context.Context, order model.Order) (model.
 
 	//  check exist for user
 	userID := uuid.Nil
-	if err := tx.QueryRowContext(
+	err = tx.QueryRowContext(
 		ctx,
-		`SELECT id FROM orders WHERE number = $1 AND user_id = $2 LIMIT 1`,
+		`SELECT user_id FROM orders WHERE number = $2 AND user_id = $1 LIMIT 1`,
 		order.UserID,
-		order.Number).Scan(&userID); err != nil {
+		order.Number).Scan(&userID)
+
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return model.Order{}, err
 	}
 
@@ -87,9 +90,7 @@ func (s *orderRepository) GetForUser(ctx context.Context, userID uuid.UUID) ([]m
 	userOrders := make([]model.Order, 0)
 
 	rows, err := s.db.QueryContext(ctx,
-		`SELECT  id, user_id, number, uploaded_at, status, accrual
-		FROM orders WHERE user_id = $1
-        ORDER BY uploaded_at DESC`,
+		"SELECT id, user_id, number, uploaded_at, status, accrual FROM orders WHERE user_id = $1",
 		userID,
 	)
 	if err != nil {
