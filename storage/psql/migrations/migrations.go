@@ -15,7 +15,7 @@ func RunMigrations(db *sql.DB) error {
 		return err
 	}
 
-	m, err := migrate.NewWithDatabaseInstance("file://storage/psql/migrations", "praktikum", driver)
+	m, err := migrate.NewWithDatabaseInstance("file://../../storage/psql/migrations", "praktikum", driver)
 	if err != nil {
 		return err
 	}

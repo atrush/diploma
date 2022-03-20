@@ -3,9 +3,12 @@ package api
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/jwtauth/v5"
 )
 
 func NewRouter(handler *Handler) *chi.Mux {
+	tokenAuth := jwtauth.New("HS256", []byte("secret"), nil)
+
 	r := chi.NewRouter()
 	r.Use(middleware.Compress(5))
 
@@ -17,10 +20,12 @@ func NewRouter(handler *Handler) *chi.Mux {
 		r.Post("/api/user/login", handler.Login)
 	})
 
-	//r.Group(func(r chi.Router) {
-	//	r.Use(jwtauth.Verifier(handler.tokenAuth))
-	//	r.Get("/api/user/check", handler.GetUserIDFromContext)
-	//})
+	r.Group(func(r chi.Router) {
+		r.Use(jwtauth.Verifier(tokenAuth))
+		r.Use(MiddlewareAuth)
+		r.Post("/api/user/orders", handler.OrderAddToUser)
+		r.Get("/api/user/orders", handler.OrderGetListForUser)
+	})
 	//// POST /api/user/orders — загрузка пользователем номера заказа для расчёта;
 	//r.Post("/api/user/orders", handler.Ok)
 	//// GET /api/user/orders — получение списка загруженных пользователем номеров заказов, статусов их обработки и информации о начислениях;

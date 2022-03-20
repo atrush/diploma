@@ -42,9 +42,14 @@ func (a *Auth) CreateUser(ctx context.Context, login string, password string) (m
 		return model.User{}, fmt.Errorf("ошибка добавления пользователя: %w", err)
 	}
 
-	user, err := a.storage.User().Create(ctx, login, string(hash))
+	user := model.User{
+		Login:        login,
+		PasswordHash: string(hash),
+	}
+
+	user, err = a.storage.User().Create(ctx, user)
 	if err != nil {
-		if errors.Is(err, storage.ErrorConflictSaveUser) {
+		if errors.Is(err, model.ErrorConflictSaveUser) {
 			return model.User{}, ErrorUserAlreadyExist
 		}
 
@@ -59,7 +64,7 @@ func (a *Auth) CreateUser(ctx context.Context, login string, password string) (m
 func (a *Auth) Authenticate(ctx context.Context, login string, password string) (model.User, error) {
 	user, err := a.storage.User().GetByLogin(ctx, login)
 	if err != nil {
-		if errors.Is(err, storage.ErrorItemNotFound) {
+		if errors.Is(err, model.ErrorItemNotFound) {
 			return model.User{}, ErrorWrongAuthData
 		}
 

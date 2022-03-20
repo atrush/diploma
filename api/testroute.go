@@ -3,6 +3,7 @@ package api
 import (
 	"bytes"
 	"github.com/atrush/diploma.git/services/auth"
+	"github.com/atrush/diploma.git/services/order"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"io"
@@ -12,7 +13,8 @@ import (
 
 //  HandlerTest stores test data and expected response params.
 type TestRoute struct {
-	svcAuth auth.Authenticator //  authentication service
+	svcAuth  auth.Authenticator //  authentication service
+	svcOrder order.OrderManager //  orders service
 
 	name    string            //  test name
 	method  string            //  http method
@@ -28,7 +30,7 @@ type TestRoute struct {
 //  CheckTest runs handler, builds request and checks response values
 func (tt *TestRoute) CheckTest(t *testing.T) {
 	//  new handler with mock services
-	h, err := NewHandler(tt.svcAuth)
+	h, err := NewHandler(tt.svcAuth, tt.svcOrder)
 	require.NoError(t, err)
 
 	//  new router with handler

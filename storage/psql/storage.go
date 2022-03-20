@@ -11,7 +11,7 @@ import (
 var _ storage.Storage = (*Storage)(nil)
 
 type Storage struct {
-	//shortURLRepo *shortURLRepository
+	orderRepo    *orderRepository
 	userRepo     *userRepository
 	db           *sql.DB
 	conStringDSN string
@@ -55,6 +55,11 @@ func (s *Storage) User() storage.UserRepository {
 	return s.userRepo
 }
 
+//  Order returns users repository.
+func (s *Storage) Order() storage.OrderRepository {
+	return s.Order()
+}
+
 //  Close  closes database connection.
 func (s Storage) Close() {
 	if s.db == nil {
@@ -63,22 +68,4 @@ func (s Storage) Close() {
 
 	s.db.Close()
 	s.db = nil
-}
-
-//  initBase drops all and inits database tables.
-func initBase(db *sql.DB) error {
-	row := db.QueryRow("DROP SCHEMA public CASCADE;CREATE SCHEMA public;")
-	if row.Err() != nil {
-		return row.Err()
-	}
-	_, err := db.Exec("create extension if not exists \"uuid-ossp\";" +
-		"CREATE TABLE IF NOT EXISTS users (" +
-		"		id uuid primary key default uuid_generate_v4()," +
-		"		login varchar (255) unique not null," +
-		"		passhash varchar (60) not null);")
-	if row.Err() != nil {
-		return err
-	}
-	return nil
-
 }

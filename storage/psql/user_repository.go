@@ -39,7 +39,7 @@ func (r *userRepository) Create(ctx context.Context, user model.User) (model.Use
 		//  if exist return ErrorConflictSaveUser
 		pqErr, ok := err.(*pq.Error)
 		if ok && pqErr.Code == pgerrcode.UniqueViolation && pqErr.Constraint == "users_login_key" {
-			return model.User{}, storage.ErrorConflictSaveUser
+			return model.User{}, model.ErrorConflictSaveUser
 		}
 
 		return model.User{}, err
@@ -58,7 +58,7 @@ func (s *userRepository) GetByLogin(ctx context.Context, login string) (model.Us
 		login,
 	).Scan(&user.ID, &user.Login, &user.PasswordHash); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return model.User{}, storage.ErrorItemNotFound
+			return model.User{}, model.ErrorItemNotFound
 		}
 		return model.User{}, err
 	}
