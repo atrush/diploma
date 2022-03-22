@@ -65,3 +65,31 @@ func (mr *MockOrderManagerMockRecorder) GetForUser(ctx, userID interface{}) *gom
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetForUser", reflect.TypeOf((*MockOrderManager)(nil).GetForUser), ctx, userID)
 }
+
+// UpdateAccrual mocks base method.
+func (m *MockOrderManager) UpdateAccrual(ctx context.Context, order model.Order, accrual model.Accrual) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateAccrual", ctx, order, accrual)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateAccrual indicates an expected call of UpdateAccrual.
+func (mr *MockOrderManagerMockRecorder) UpdateAccrual(ctx, order, accrual interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAccrual", reflect.TypeOf((*MockOrderManager)(nil).UpdateAccrual), ctx, order, accrual)
+}
+
+// UpdateStatus mocks base method.
+func (m *MockOrderManager) UpdateStatus(ctx context.Context, id uuid.UUID, status model.OrderStatus) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateStatus", ctx, id, status)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateStatus indicates an expected call of UpdateStatus.
+func (mr *MockOrderManagerMockRecorder) UpdateStatus(ctx, id, status interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateStatus", reflect.TypeOf((*MockOrderManager)(nil).UpdateStatus), ctx, id, status)
+}

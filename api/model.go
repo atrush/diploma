@@ -18,9 +18,26 @@ type (
 		Accrual    float64 `json:"accrual,omitempty"`
 		UploadedAt string  `json:"uploaded_at"`
 	}
+	AccrualResponse struct {
+		Number  string `json:"order"`
+		Status  string `json:"status"`
+		Accrual int    `json:"accrual,omitempty"`
+	}
 
 	contextKey string
 )
+
+func (a *AccrualResponse) ToCanonical() (model.Accrual, error) {
+	status := model.AccrualStatus(a.Status)
+	if !status.IsValid() {
+		return model.Accrual{}, fmt.Errorf("error convert AccrualResponse to Accrual: wrong status %v", a.Status)
+	}
+	return model.Accrual{
+		Status:  status,
+		Number:  a.Number,
+		Accrual: a.Accrual * model.MoneyAccuracy,
+	}, nil
+}
 
 //  OrderResponseListFromCanonical makes list of OrderResponse from canonical orders.
 func OrderResponseListFromCanonical(objs []model.Order) []OrderResponse {
@@ -33,7 +50,7 @@ func OrderResponseListFromCanonical(objs []model.Order) []OrderResponse {
 			UploadedAt: order.UploadedAt.Format(time.RFC3339),
 		}
 		if order.Accrual > 0 {
-			o.Accrual = float64(order.Accrual) / 100
+			o.Accrual = float64(order.Accrual) / model.MoneyAccuracy
 		}
 
 		responseArr = append(responseArr, o)

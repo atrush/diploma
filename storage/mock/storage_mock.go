@@ -11,6 +11,7 @@ import (
 	model "github.com/atrush/diploma.git/model"
 	storage "github.com/atrush/diploma.git/storage"
 	gomock "github.com/golang/mock/gomock"
+	uuid "github.com/google/uuid"
 )
 
 // MockStorage is a mock of Storage interface.
@@ -100,18 +101,18 @@ func (m *MockUserRepository) EXPECT() *MockUserRepositoryMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockUserRepository) Create(ctx context.Context, login, hash string) (model.User, error) {
+func (m *MockUserRepository) Create(ctx context.Context, user model.User) (model.User, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", ctx, login, hash)
+	ret := m.ctrl.Call(m, "Create", ctx, user)
 	ret0, _ := ret[0].(model.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockUserRepositoryMockRecorder) Create(ctx, login, hash interface{}) *gomock.Call {
+func (mr *MockUserRepositoryMockRecorder) Create(ctx, user interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUserRepository)(nil).Create), ctx, login, hash)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUserRepository)(nil).Create), ctx, user)
 }
 
 // GetByLogin mocks base method.
@@ -150,4 +151,62 @@ func NewMockOrderRepository(ctrl *gomock.Controller) *MockOrderRepository {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockOrderRepository) EXPECT() *MockOrderRepositoryMockRecorder {
 	return m.recorder
+}
+
+// Create mocks base method.
+func (m *MockOrderRepository) Create(ctx context.Context, order model.Order) (model.Order, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", ctx, order)
+	ret0, _ := ret[0].(model.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockOrderRepositoryMockRecorder) Create(ctx, order interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockOrderRepository)(nil).Create), ctx, order)
+}
+
+// GetForUser mocks base method.
+func (m *MockOrderRepository) GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Order, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetForUser", ctx, userID)
+	ret0, _ := ret[0].([]model.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetForUser indicates an expected call of GetForUser.
+func (mr *MockOrderRepositoryMockRecorder) GetForUser(ctx, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetForUser", reflect.TypeOf((*MockOrderRepository)(nil).GetForUser), ctx, userID)
+}
+
+// UpdateAccrual mocks base method.
+func (m *MockOrderRepository) UpdateAccrual(ctx context.Context, id uuid.UUID, status model.OrderStatus, accrual int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateAccrual", ctx, id, status, accrual)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateAccrual indicates an expected call of UpdateAccrual.
+func (mr *MockOrderRepositoryMockRecorder) UpdateAccrual(ctx, id, status, accrual interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAccrual", reflect.TypeOf((*MockOrderRepository)(nil).UpdateAccrual), ctx, id, status, accrual)
+}
+
+// UpdateStatus mocks base method.
+func (m *MockOrderRepository) UpdateStatus(ctx context.Context, id uuid.UUID, status model.OrderStatus) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateStatus", ctx, id, status)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateStatus indicates an expected call of UpdateStatus.
+func (mr *MockOrderRepositoryMockRecorder) UpdateStatus(ctx, id, status interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateStatus", reflect.TypeOf((*MockOrderRepository)(nil).UpdateStatus), ctx, id, status)
 }

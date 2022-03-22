@@ -23,6 +23,30 @@ func newOrderRepository(db *sql.DB) *orderRepository {
 	}
 }
 
+// UpdateStatus implements interface form implements OrderRepository
+func (r *orderRepository) UpdateStatus(ctx context.Context, id uuid.UUID, status model.OrderStatus) error {
+	if _, err := r.db.ExecContext(
+		ctx,
+		"UPDATE orders SET status = $1 WHERE id = $2",
+		status, id); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// UpdateAccrual implements interface form implements OrderRepository
+func (r *orderRepository) UpdateAccrual(ctx context.Context, id uuid.UUID, status model.OrderStatus, accrual int) error {
+	if _, err := r.db.ExecContext(
+		ctx,
+		"UPDATE orders SET status = $1, accrual= $2  WHERE id = $3",
+		status, accrual, id); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //  Create implements OrderRepository Create interface
 func (r *orderRepository) Create(ctx context.Context, order model.Order) (model.Order, error) {
 	//  init transaction

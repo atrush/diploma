@@ -5,7 +5,13 @@ import (
 	"time"
 )
 
-type OrderStatus string
+type (
+	OrderStatus   string
+	AccrualStatus string
+)
+
+//  result money accuracy coeff
+const MoneyAccuracy = 1000
 
 var (
 	OrderStatusNew        OrderStatus = "NEW"
@@ -13,7 +19,23 @@ var (
 	OrderStatusProcessing OrderStatus = "PROCESSING"
 	OrderStatusInvalid    OrderStatus = "INVALID"
 	OrderStatusProcessed  OrderStatus = "PROCESSED"
+
+	AccrualStatusRegistered AccrualStatus = "REGISTERED"
+	AccrualStatusInvalid    AccrualStatus = "INVALID"
+	AccrualStatusProcessing AccrualStatus = "PROCESSING"
+	AccrualStatusProcessed  AccrualStatus = "PROCESSED"
 )
+
+func (a AccrualStatus) IsValid() bool {
+	statuses := map[string]struct{}{
+		"REGISTERED": struct{}{},
+		"INVALID":    struct{}{},
+		"PROCESSING": struct{}{},
+		"PROCESSED":  struct{}{},
+	}
+	_, ok := statuses[string(a)]
+	return ok
+}
 
 type User struct {
 	ID           uuid.UUID
@@ -28,4 +50,10 @@ type Order struct {
 	Status     OrderStatus
 	Accrual    int
 	UploadedAt time.Time
+}
+
+type Accrual struct {
+	Number  string
+	Status  AccrualStatus
+	Accrual int
 }

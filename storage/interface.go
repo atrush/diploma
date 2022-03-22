@@ -26,9 +26,12 @@ type UserRepository interface {
 
 type OrderRepository interface {
 	//  Create adds new order to database? if not exist.
-	//  If exist with that number for user returns ErrorConflictSaveOrder
+	//  If exist with that number for user returns ErrorConflictSaveOrder.
 	Create(ctx context.Context, order model.Order) (model.Order, error)
-
 	//  GetForUser selects user orders
 	GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Order, error)
+	//  UpdateStatus updates status for order record, selected by id.
+	UpdateStatus(ctx context.Context, id uuid.UUID, status model.OrderStatus) error
+	//  UpdateAccrual updates order accrual and status.
+	UpdateAccrual(ctx context.Context, id uuid.UUID, status model.OrderStatus, accrual int) error
 }
