@@ -1,4 +1,4 @@
-package api
+package handler
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ import (
 
 var (
 	userID     = uuid.New()
-	userToken  = genJWTAuthToken(userID)
+	userToken  = GenJWTAuthToken(userID)
 	mockOrders = []model.Order{
 		{
 			ID:         uuid.New(),

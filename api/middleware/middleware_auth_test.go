@@ -1,9 +1,11 @@
-package api
+package middleware
 
 import (
+	"github.com/atrush/diploma.git/api/model"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
+	"log"
 	"net/http"
 	"testing"
 )
@@ -84,12 +86,14 @@ type writeUserIDToBody struct {
 }
 
 func (wr writeUserIDToBody) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	ctxID := r.Context().Value(ContextKeyUserID).(string)
+	ctxID := r.Context().Value(model.ContextKeyUserID).(string)
 	require.NotEmpty(wr.t, ctxID)
 
 	userID, err := uuid.Parse(ctxID)
 	require.NoError(wr.t, err)
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(userID.String()))
+	if _, err := w.Write([]byte(userID.String())); err != nil {
+		log.Fatal(err.Error())
+	}
 }

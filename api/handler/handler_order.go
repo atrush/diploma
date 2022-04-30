@@ -1,8 +1,9 @@
-package api
+package handler
 
 import (
 	"encoding/json"
 	"errors"
+	apimodel "github.com/atrush/diploma.git/api/model"
 	"github.com/atrush/diploma.git/model"
 	"github.com/atrush/diploma.git/pkg/validation"
 	"io/ioutil"
@@ -93,7 +94,7 @@ func (h *Handler) OrderGetListForUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jsResult, err := json.Marshal(OrderResponseListFromCanonical(orders))
+	jsResult, err := json.Marshal(apimodel.OrderResponseListFromCanonical(orders))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -101,6 +102,9 @@ func (h *Handler) OrderGetListForUser(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(jsResult))
 
+	if _, err := w.Write(jsResult); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }

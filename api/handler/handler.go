@@ -1,7 +1,8 @@
-package api
+package handler
 
 import (
 	"fmt"
+	"github.com/atrush/diploma.git/api/model"
 	"github.com/atrush/diploma.git/services/auth"
 	"github.com/atrush/diploma.git/services/order"
 	"github.com/google/uuid"
@@ -12,8 +13,6 @@ type Handler struct {
 	svcAuth  auth.Authenticator
 	svcOrder order.OrderManager
 }
-
-var ContextKeyUserID = contextKey("user-id")
 
 // NewHandler Return new handler
 func NewHandler(auth auth.Authenticator, order order.OrderManager) (*Handler, error) {
@@ -30,7 +29,7 @@ func (h *Handler) Ok(w http.ResponseWriter, _ *http.Request) {
 }
 
 func (h *Handler) GetUserIDFromContext(r *http.Request) (uuid.UUID, error) {
-	ctxID := r.Context().Value(ContextKeyUserID)
+	ctxID := r.Context().Value(model.ContextKeyUserID)
 	if ctxID == nil {
 		return uuid.Nil, fmt.Errorf("ail to get user id from context: user id is empty")
 	}

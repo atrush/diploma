@@ -1,4 +1,4 @@
-package api
+package model
 
 import (
 	"fmt"
@@ -24,8 +24,10 @@ type (
 		Accrual int    `json:"accrual,omitempty"`
 	}
 
-	contextKey string
+	ContextKey string
 )
+
+var ContextKeyUserID = ContextKey("user-id")
 
 func (a *AccrualResponse) ToCanonical() (model.Accrual, error) {
 	status := model.AccrualStatus(a.Status)

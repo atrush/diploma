@@ -1,7 +1,8 @@
-package api
+package middleware
 
 import (
 	"context"
+	"github.com/atrush/diploma.git/api/model"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/lestrrat-go/jwx/jwt"
 	"net/http"
@@ -35,7 +36,7 @@ func MiddlewareAuth(next http.Handler) http.Handler {
 		}
 
 		// Set userID to context
-		ctx := context.WithValue(r.Context(), ContextKeyUserID, userID)
+		ctx := context.WithValue(r.Context(), model.ContextKeyUserID, userID)
 		r = r.WithContext(ctx)
 
 		next.ServeHTTP(w, r)

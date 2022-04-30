@@ -1,9 +1,10 @@
-package api
+package handler
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/atrush/diploma.git/api/model"
 	"github.com/atrush/diploma.git/services/auth"
 	"github.com/google/uuid"
 	"net/http"
@@ -74,18 +75,18 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 }
 
 //  readLoginRequest reads login data from request.
-func (h Handler) readLoginRequest(w http.ResponseWriter, r *http.Request) (LoginRequest, error) {
-	var loginData LoginRequest
+func (h Handler) readLoginRequest(w http.ResponseWriter, r *http.Request) (model.LoginRequest, error) {
+	var loginData model.LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&loginData); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 
-		return LoginRequest{}, fmt.Errorf("wrong data format")
+		return model.LoginRequest{}, fmt.Errorf("wrong data format")
 	}
 	defer r.Body.Close()
 	if err := loginData.Validate(); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 
-		return LoginRequest{}, fmt.Errorf("wrong data format")
+		return model.LoginRequest{}, fmt.Errorf("wrong data format")
 	}
 	return loginData, nil
 }

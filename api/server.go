@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/atrush/diploma.git/api/handler"
 	"github.com/atrush/diploma.git/pkg"
 	"github.com/atrush/diploma.git/services/auth"
 	"github.com/atrush/diploma.git/services/order"
@@ -27,7 +28,7 @@ func NewServer(cfg *pkg.Config, s storage.Storage) (*Server, error) {
 		return nil, fmt.Errorf("ошибка запуска server:%w", err)
 	}
 
-	handler, err := NewHandler(jwtAuth, svcOrder)
+	h, err := handler.NewHandler(jwtAuth, svcOrder)
 	if err != nil {
 		return nil, fmt.Errorf("ошибка запуска server:%w", err)
 	}
@@ -35,7 +36,7 @@ func NewServer(cfg *pkg.Config, s storage.Storage) (*Server, error) {
 	return &Server{
 		httpServer: http.Server{
 			Addr:    cfg.ServerAddress,
-			Handler: NewRouter(handler),
+			Handler: handler.NewRouter(h),
 		},
 	}, nil
 }

@@ -1,6 +1,7 @@
-package api
+package handler
 
 import (
+	apimiddleware "github.com/atrush/diploma.git/api/middleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/jwtauth/v5"
@@ -22,7 +23,7 @@ func NewRouter(handler *Handler) *chi.Mux {
 
 	r.Group(func(r chi.Router) {
 		r.Use(jwtauth.Verifier(tokenAuth))
-		r.Use(MiddlewareAuth)
+		r.Use(apimiddleware.MiddlewareAuth)
 		r.Post("/api/user/orders", handler.OrderAddToUser)
 		r.Get("/api/user/orders", handler.OrderGetListForUser)
 	})

@@ -1,55 +1,41 @@
-package api
+package handler
 
 import (
 	"bytes"
+	"github.com/atrush/diploma.git/services/auth"
+	"github.com/atrush/diploma.git/services/order"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"io"
-	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
-type Middleware func(http.Handler) http.Handler
-
 //  HandlerTest stores test data and expected response params.
-type TestMiddleware struct {
+type TestRoute struct {
+	svcAuth  auth.Authenticator //  authentication service
+	svcOrder order.OrderManager //  orders service
+
 	name    string            //  test name
 	method  string            //  http method
+	url     string            //  request url
 	body    string            //  request body content
 	headers map[string]string //  request headers
-
-	middlewareFunc []Middleware //  testing middleware func
-	nextHandler    http.Handler // func for process request after testing middleware
 
 	expectedBody    string            //  expected response body
 	expectedHeaders map[string]string //  expected response headers
 	expectedCode    int               // expected response http status
 }
 
-//
-//nextHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-//	val := r.Context().Value(ContextKeyUserID)
-//	if val == nil {
-//		t.Error("user id not present")
-//	}
-//	valStr, ok := val.(string)
-//	if !ok {
-//		t.Error("not string")
-//	}
-//	if valStr != "1234" {
-//		t.Error("wrong reqId")
-//	}
-//})
+//  CheckTest runs handler, builds request and checks response values
+func (tt *TestRoute) CheckTest(t *testing.T) {
+	//  new handler with mock services
+	h, err := NewHandler(tt.svcAuth, tt.svcOrder)
+	require.NoError(t, err)
 
-func (tt *TestMiddleware) CheckTest(t *testing.T) {
-
-	h := tt.nextHandler
-	for _, middleware := range tt.middlewareFunc {
-		h = middleware(h)
-	}
-
-	request := httptest.NewRequest(tt.method, "/", bytes.NewBuffer([]byte(tt.body)))
+	//  new router with handler
+	r := NewRouter(h)
+	request := httptest.NewRequest(tt.method, tt.url, bytes.NewBuffer([]byte(tt.body)))
 
 	//  set headers
 	if len(tt.headers) > 0 {
@@ -60,7 +46,7 @@ func (tt *TestMiddleware) CheckTest(t *testing.T) {
 
 	//  make request
 	w := httptest.NewRecorder()
-	h.ServeHTTP(w, request)
+	r.ServeHTTP(w, request)
 
 	res := w.Result()
 	resBody, err := io.ReadAll(res.Body)

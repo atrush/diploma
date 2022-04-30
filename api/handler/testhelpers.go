@@ -1,4 +1,4 @@
-package api
+package handler
 
 import (
 	"github.com/go-chi/jwtauth/v5"
@@ -7,7 +7,7 @@ import (
 )
 
 //  genJWTAuthToken generates jwtauth token from user id
-func genJWTAuthToken(userID uuid.UUID) string {
+func GenJWTAuthToken(userID uuid.UUID) string {
 	tokenAuth := jwtauth.New("HS256", []byte("secret"), nil)
 
 	_, tokenString, err := tokenAuth.Encode(map[string]interface{}{"user_id": userID.String()})
