@@ -1,0 +1,227 @@
+{
+  "Users": [
+    {
+      "ID": "dbcb017f-5ef0-40e5-9d0b-6db8f5e90c28",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "ca7dde82-8f3f-4116-ba23-8956b615dc64",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "57519be5-5bbf-45c2-8fdf-ab7742c8b90d",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "274d70fc-bc86-45a7-aa4e-321ed4759c3c",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "0ead2377-2352-41db-9967-7f4af1af175f",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "7782003a-fe0d-47c5-8618-8d48c4083b71",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "6cd6e611-060a-4786-87d2-bed991c7b8e9",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "f94ce1f0-0439-4127-af15-ecd8ab406731",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "432c93de-5b7b-4a54-80b9-4a519c229c0a",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "d33aa93d-d75d-4a4a-9175-bff57de7a3e1",
+      "Login": "",
+      "PasswordHash": ""
+    }
+  ],
+  "Orders": [
+    {
+      "ID": "09923eb6-47cb-48ca-86bc-df84e01224bb",
+      "Number": "6103701024561769",
+      "UserID": "dbcb017f-5ef0-40e5-9d0b-6db8f5e90c28",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "a7c3ef4d-1bd4-42b3-8a70-3b29ccfe822e",
+      "Number": "2675865373825070",
+      "UserID": "ca7dde82-8f3f-4116-ba23-8956b615dc64",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "2f3565b1-2957-4807-b1ae-065646bc745b",
+      "Number": "6188644838072821",
+      "UserID": "ca7dde82-8f3f-4116-ba23-8956b615dc64",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "50421e7e-0822-40bb-908e-65ff1811fcf2",
+      "Number": "2254083172131232",
+      "UserID": "ca7dde82-8f3f-4116-ba23-8956b615dc64",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "065c5b84-2bc9-447d-a1c1-cb7185202aad",
+      "Number": "4225747548588380",
+      "UserID": "ca7dde82-8f3f-4116-ba23-8956b615dc64",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "800fc009-09c2-4d41-9d04-db40b1a579d8",
+      "Number": "0740064321441447",
+      "UserID": "57519be5-5bbf-45c2-8fdf-ab7742c8b90d",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "e447bb05-70a7-455a-9283-b2b0fa047db6",
+      "Number": "3663733635151572",
+      "UserID": "57519be5-5bbf-45c2-8fdf-ab7742c8b90d",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "dcd5bc95-3004-4512-9545-70b6192a549f",
+      "Number": "1701803731677230",
+      "UserID": "57519be5-5bbf-45c2-8fdf-ab7742c8b90d",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "50903dc5-1e19-4aa0-a217-ce4237af1916",
+      "Number": "4246720124876623",
+      "UserID": "274d70fc-bc86-45a7-aa4e-321ed4759c3c",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "e7a60812-425b-4d5f-bdc8-5101acb5bb0a",
+      "Number": "1258213818211688",
+      "UserID": "0ead2377-2352-41db-9967-7f4af1af175f",
+      "Status": "PROCESSED",
+      "Accrual": 30000,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "4b02efae-85a3-41a1-a223-73a918e2ef4f",
+      "Number": "2044515743876311",
+      "UserID": "0ead2377-2352-41db-9967-7f4af1af175f",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "48aa889c-94bc-47dc-947e-49a555ae9eda",
+      "Number": "2141885384266300",
+      "UserID": "432c93de-5b7b-4a54-80b9-4a519c229c0a",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "6bf60b63-5434-4a64-8542-e41df33ac702",
+      "Number": "4216744344110106",
+      "UserID": "d33aa93d-d75d-4a4a-9175-bff57de7a3e1",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    }
+  ],
+  "Accruals": [
+    {
+      "Number": "6103701024561769",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "2675865373825070",
+      "Status": "PROCESSED",
+      "Accrual": 20000
+    },
+    {
+      "Number": "6188644838072821",
+      "Status": "PROCESSED",
+      "Accrual": 40000
+    },
+    {
+      "Number": "2254083172131232",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "4225747548588380",
+      "Status": "PROCESSED",
+      "Accrual": 60000
+    },
+    {
+      "Number": "0740064321441447",
+      "Status": "PROCESSED",
+      "Accrual": 20000
+    },
+    {
+      "Number": "3663733635151572",
+      "Status": "PROCESSED",
+      "Accrual": 50000
+    },
+    {
+      "Number": "1701803731677230",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "4246720124876623",
+      "Status": "PROCESSED",
+      "Accrual": 40000
+    },
+    {
+      "Number": "1258213818211688",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "2044515743876311",
+      "Status": "PROCESSING",
+      "Accrual": 0
+    },
+    {
+      "Number": "2141885384266300",
+      "Status": "INVALID",
+      "Accrual": 0
+    },
+    {
+      "Number": "4216744344110106",
+      "Status": "REGISTERED",
+      "Accrual": 0
+    }
+  ]
+}

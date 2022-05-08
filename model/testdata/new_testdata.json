@@ -1,0 +1,409 @@
+{
+  "Users": [
+    {
+      "ID": "a0a177b9-d512-4d47-b367-2c71e5f97f0b",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "3271c550-433e-403d-a9ab-482ae8c9a1c3",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "a92598f9-a37a-4030-85b9-a9c469f37a60",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "5b8fb68a-ecf1-4573-8d26-bde9f0df5ebb",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "295a2440-6893-43c5-9cee-b8da1f4e3e8c",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "f1c37415-b259-4dac-b5ad-b58279533e98",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "8b4dd289-ff3c-4d2a-9606-860de71f6a3e",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "6029795d-9485-425d-ab30-6558abf66d86",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "99ffa14c-cd1a-4456-9e0b-8a649c8b8192",
+      "Login": "",
+      "PasswordHash": ""
+    },
+    {
+      "ID": "b2129763-a034-4ad4-8eae-6f6366df57fe",
+      "Login": "",
+      "PasswordHash": ""
+    }
+  ],
+  "Orders": [
+    {
+      "ID": "e642e6ba-ac92-4da8-95a5-464db4076e4f",
+      "Number": "5432112838608842",
+      "UserID": "a0a177b9-d512-4d47-b367-2c71e5f97f0b",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "a80dfbaa-1213-4f54-8aa1-80abb89177e1",
+      "Number": "8650530724514510",
+      "UserID": "a0a177b9-d512-4d47-b367-2c71e5f97f0b",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "9eaf126c-c764-4b18-9d90-5d8423ec1ded",
+      "Number": "2838745588524474",
+      "UserID": "a92598f9-a37a-4030-85b9-a9c469f37a60",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "dafe7879-4ffd-4e76-9d4a-b22f9a4e51a0",
+      "Number": "4558623103027634",
+      "UserID": "a92598f9-a37a-4030-85b9-a9c469f37a60",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "a2adbca5-6cb0-4e12-9192-978bc5561ed3",
+      "Number": "1271838431722852",
+      "UserID": "a92598f9-a37a-4030-85b9-a9c469f37a60",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "e41b3d9b-98a6-4820-997b-2776562bfe81",
+      "Number": "4680572528521609",
+      "UserID": "a92598f9-a37a-4030-85b9-a9c469f37a60",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "27dd3c24-f544-4dfb-bf73-8700a643498b",
+      "Number": "7467732233453470",
+      "UserID": "5b8fb68a-ecf1-4573-8d26-bde9f0df5ebb",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "3c4fc3c9-bf99-4e70-a6ec-5d2846cd5914",
+      "Number": "0681473886176135",
+      "UserID": "5b8fb68a-ecf1-4573-8d26-bde9f0df5ebb",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "876003fc-48cf-4ad7-b43f-3b6e448bc7db",
+      "Number": "0145651880258286",
+      "UserID": "5b8fb68a-ecf1-4573-8d26-bde9f0df5ebb",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "03ffc847-9816-4aa9-9082-d0e236e3916c",
+      "Number": "3763330715724144",
+      "UserID": "5b8fb68a-ecf1-4573-8d26-bde9f0df5ebb",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "8c511639-8b1f-4fb0-9d2f-9d8aea9b128c",
+      "Number": "5287085260218106",
+      "UserID": "295a2440-6893-43c5-9cee-b8da1f4e3e8c",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "6115e91f-b164-4c76-a33e-dcc2170fcaaf",
+      "Number": "4014126027656551",
+      "UserID": "295a2440-6893-43c5-9cee-b8da1f4e3e8c",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "0cc94d32-8152-4251-b5d4-a636dbab8670",
+      "Number": "7655386057247633",
+      "UserID": "295a2440-6893-43c5-9cee-b8da1f4e3e8c",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "b8f48272-5f10-4f3f-bd6e-48687398b588",
+      "Number": "3220585368287270",
+      "UserID": "295a2440-6893-43c5-9cee-b8da1f4e3e8c",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "75da1d3f-b7e3-4313-a592-7cef3fa27c11",
+      "Number": "3345801750734385",
+      "UserID": "f1c37415-b259-4dac-b5ad-b58279533e98",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "f3624da2-116c-4d59-bc82-fb66fdf4de44",
+      "Number": "2260458357240218",
+      "UserID": "f1c37415-b259-4dac-b5ad-b58279533e98",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "602ba717-dced-4e5c-bdc2-fffc5281885d",
+      "Number": "7473271607273422",
+      "UserID": "f1c37415-b259-4dac-b5ad-b58279533e98",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "4513d6c2-eef7-4857-b800-ef1707053433",
+      "Number": "5868445544516872",
+      "UserID": "8b4dd289-ff3c-4d2a-9606-860de71f6a3e",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "7f7c8f2e-8acc-4ab4-9aef-ccee1694270f",
+      "Number": "0875435780723136",
+      "UserID": "8b4dd289-ff3c-4d2a-9606-860de71f6a3e",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "8d500dca-cc6d-4c4a-91cd-00cb9b7976ba",
+      "Number": "3168680705801489",
+      "UserID": "8b4dd289-ff3c-4d2a-9606-860de71f6a3e",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "475e4787-cde3-4ecc-8d55-168b5fefe6b3",
+      "Number": "8516056878568148",
+      "UserID": "6029795d-9485-425d-ab30-6558abf66d86",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "c9bad6a1-24ca-4113-a511-70c4b53ef418",
+      "Number": "7141582207321730",
+      "UserID": "6029795d-9485-425d-ab30-6558abf66d86",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "7e4d3f1d-8304-40fe-8a77-e5a6faf9f7af",
+      "Number": "0404178828043352",
+      "UserID": "6029795d-9485-425d-ab30-6558abf66d86",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "831952f6-a64d-4a13-964a-67b843dcd058",
+      "Number": "8526532870428463",
+      "UserID": "6029795d-9485-425d-ab30-6558abf66d86",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "4b916acd-6911-4258-a0cb-27a2583229ca",
+      "Number": "8031040664246305",
+      "UserID": "99ffa14c-cd1a-4456-9e0b-8a649c8b8192",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "6f88e510-e624-480a-9bb8-edaf2b1b08da",
+      "Number": "5162574644381110",
+      "UserID": "b2129763-a034-4ad4-8eae-6f6366df57fe",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    },
+    {
+      "ID": "fc109bbe-c0e7-47fb-afcb-d75b3217fd90",
+      "Number": "4726057581521171",
+      "UserID": "b2129763-a034-4ad4-8eae-6f6366df57fe",
+      "Status": "NEW",
+      "Accrual": 0,
+      "UploadedAt": "0001-01-01T00:00:00Z"
+    }
+  ],
+  "Accruals": [
+    {
+      "Number": "5432112838608842",
+      "Status": "PROCESSED",
+      "Accrual": 40000
+    },
+    {
+      "Number": "8650530724514510",
+      "Status": "PROCESSED",
+      "Accrual": 20000
+    },
+    {
+      "Number": "2838745588524474",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "4558623103027634",
+      "Status": "PROCESSED",
+      "Accrual": 60000
+    },
+    {
+      "Number": "1271838431722852",
+      "Status": "PROCESSED",
+      "Accrual": 40000
+    },
+    {
+      "Number": "4680572528521609",
+      "Status": "PROCESSED",
+      "Accrual": 50000
+    },
+    {
+      "Number": "7467732233453470",
+      "Status": "PROCESSED",
+      "Accrual": 60000
+    },
+    {
+      "Number": "0681473886176135",
+      "Status": "PROCESSED",
+      "Accrual": 20000
+    },
+    {
+      "Number": "0145651880258286",
+      "Status": "PROCESSED",
+      "Accrual": 60000
+    },
+    {
+      "Number": "3763330715724144",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "5287085260218106",
+      "Status": "PROCESSED",
+      "Accrual": 60000
+    },
+    {
+      "Number": "4014126027656551",
+      "Status": "PROCESSED",
+      "Accrual": 20000
+    },
+    {
+      "Number": "7655386057247633",
+      "Status": "PROCESSED",
+      "Accrual": 50000
+    },
+    {
+      "Number": "3220585368287270",
+      "Status": "PROCESSED",
+      "Accrual": 20000
+    },
+    {
+      "Number": "3345801750734385",
+      "Status": "PROCESSED",
+      "Accrual": 50000
+    },
+    {
+      "Number": "2260458357240218",
+      "Status": "PROCESSED",
+      "Accrual": 60000
+    },
+    {
+      "Number": "7473271607273422",
+      "Status": "PROCESSED",
+      "Accrual": 40000
+    },
+    {
+      "Number": "5868445544516872",
+      "Status": "PROCESSED",
+      "Accrual": 50000
+    },
+    {
+      "Number": "0875435780723136",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "3168680705801489",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "8516056878568148",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "7141582207321730",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "0404178828043352",
+      "Status": "PROCESSED",
+      "Accrual": 50000
+    },
+    {
+      "Number": "8526532870428463",
+      "Status": "PROCESSED",
+      "Accrual": 60000
+    },
+    {
+      "Number": "8031040664246305",
+      "Status": "PROCESSED",
+      "Accrual": 30000
+    },
+    {
+      "Number": "5162574644381110",
+      "Status": "PROCESSED",
+      "Accrual": 40000
+    },
+    {
+      "Number": "4726057581521171",
+      "Status": "PROCESSED",
+      "Accrual": 40000
+    }
+  ]
+}
