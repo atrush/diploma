@@ -15,9 +15,9 @@ type Config struct {
 
 //  Default config params.
 const (
-	defDatabaseDSN    = "postgres://postgres:postgres@localhost:5432/tstdb?sslmode=disable"
+	defDatabaseDSN    = "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 	defServerAddress  = ":8070"
-	defAccrualAddress = "localhost:8090"
+	defAccrualAddress = "localhost:8080"
 )
 
 //  NewConfig inits new config.
@@ -29,8 +29,6 @@ func NewConfig() (*Config, error) {
 	if err := cfg.readEnvConfig(); err != nil {
 		return nil, fmt.Errorf("error config initializatioin: %w", err)
 	}
-
-	// TODO validation
 
 	return &cfg, nil
 }
@@ -58,7 +56,7 @@ func (c *Config) readEnvConfig() error {
 		c.ServerAddress = envConfig.ServerAddress
 	}
 	if envConfig.AccrualAddress != "" {
-		c.DatabaseDSN = envConfig.AccrualAddress
+		c.AccrualAddress = envConfig.AccrualAddress
 	}
 
 	return nil

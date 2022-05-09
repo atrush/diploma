@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/atrush/diploma.git/storage"
 	"github.com/atrush/diploma.git/storage/psql/fixtures"
-	"github.com/atrush/diploma.git/storage/psql/migrations"
 )
 
 var _ storage.Storage = (*Storage)(nil)
@@ -36,9 +35,6 @@ func NewStorage(dsn string) (*Storage, error) {
 	//if err := initBase(db); err != nil {
 	//	return nil, err
 	//}
-	if err := migrations.RunMigrations(db, "tstdb"); err != nil {
-		return nil, err
-	}
 
 	st := &Storage{
 		db:           db,

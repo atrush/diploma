@@ -1,4 +1,4 @@
-package migrations
+package psql
 
 import (
 	"database/sql"
@@ -6,7 +6,7 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v4/stdlib"
 	"log"
 	"os"
 	"path"
@@ -16,13 +16,20 @@ import (
 
 //  RunMigrations apply migrations to database
 //  !! drop database before run migrations
-func RunMigrations(db *sql.DB, dbName string) error {
+func RunMigrations(dbDSN string, dbName string) error {
+	db, err := sql.Open("pgx", dbDSN)
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
 	if err != nil {
 		return err
 	}
+	defer driver.Close()
 
-	m, err := migrate.NewWithDatabaseInstance(getMigrationsRelPath(), dbName, driver)
+	m, err := migrate.NewWithDatabaseInstance("file://migrations", dbName, driver)
 	if err != nil {
 		return err
 	}

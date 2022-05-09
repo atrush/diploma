@@ -25,6 +25,10 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
+	if err := psql.RunMigrations(cfg.DatabaseDSN, "postgres"); err != nil {
+		log.Fatal(err.Error())
+	}
+
 	db, err := psql.NewStorage(cfg.DatabaseDSN)
 	if err != nil {
 		log.Fatal(err.Error())
