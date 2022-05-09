@@ -34,4 +34,8 @@ type OrderRepository interface {
 	UpdateStatus(ctx context.Context, id uuid.UUID, status model.OrderStatus) error
 	//  UpdateAccrual updates order accrual and status.
 	UpdateAccrual(ctx context.Context, id uuid.UUID, status model.OrderStatus, accrual int) error
+	//  GetUnprocessedOrders gets unprocessed orders, and change status to UPDATING
+	GetUnprocessedOrders(ctx context.Context, limit int) ([]model.Order, error)
+	//  UpdateStatusToNewBatch Updates statuse to new and sets accrual to 0, for batch orders
+	UpdateStatusToNewBatch(ctx context.Context, batch []model.Order) (err error)
 }

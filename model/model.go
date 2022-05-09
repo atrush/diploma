@@ -19,6 +19,7 @@ var (
 	OrderStatusProcessing OrderStatus = "PROCESSING"
 	OrderStatusInvalid    OrderStatus = "INVALID"
 	OrderStatusProcessed  OrderStatus = "PROCESSED"
+	OrderStatusUpdating   OrderStatus = "UPDATING" // status for process accrual request
 
 	AccrualStatusRegistered AccrualStatus = "REGISTERED"
 	AccrualStatusInvalid    AccrualStatus = "INVALID"

@@ -1,11 +1,12 @@
 package psql
 
 import (
+	"context"
 	"database/sql"
-	"github.com/atrush/diploma.git/storage"
-	"github.com/atrush/diploma.git/storage/psql/migrations"
-
 	"fmt"
+	"github.com/atrush/diploma.git/storage"
+	"github.com/atrush/diploma.git/storage/psql/fixtures"
+	"github.com/atrush/diploma.git/storage/psql/migrations"
 )
 
 var _ storage.Storage = (*Storage)(nil)
@@ -35,7 +36,7 @@ func NewStorage(conStringDSN string) (*Storage, error) {
 	//if err := initBase(db); err != nil {
 	//	return nil, err
 	//}
-	if err := migrations.RunMigrations(db); err != nil {
+	if err := migrations.RunMigrations(db, "tstdb"); err != nil {
 		return nil, err
 	}
 
@@ -46,6 +47,21 @@ func NewStorage(conStringDSN string) (*Storage, error) {
 
 	st.orderRepo = newOrderRepository(db)
 	st.userRepo = newUserRepository(db)
+
+	return st, nil
+}
+
+func NewTestStorage() (*Storage, error) {
+
+	dsn := "postgres://postgres:postgres@localhost:5432/tstdb?sslmode=disable"
+	st, err := NewStorage(dsn)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := fixtures.LoadFixtures(context.Background(), st.db); err != nil {
+		return nil, err
+	}
 
 	return st, nil
 }

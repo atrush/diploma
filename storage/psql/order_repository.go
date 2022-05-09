@@ -7,6 +7,7 @@ import (
 	"github.com/atrush/diploma.git/model"
 	"github.com/atrush/diploma.git/storage"
 	"github.com/google/uuid"
+	"log"
 )
 
 var _ storage.OrderRepository = (*orderRepository)(nil)
@@ -60,7 +61,7 @@ func (r *orderRepository) Create(ctx context.Context, order model.Order) (model.
 		//todo: logging if err
 	}()
 
-	//  check exist for user
+	//  check order exist for user
 	userID := uuid.Nil
 	err = tx.QueryRowContext(
 		ctx,
@@ -76,7 +77,7 @@ func (r *orderRepository) Create(ctx context.Context, order model.Order) (model.
 		if userID == order.UserID {
 			return model.Order{}, model.ErrorOrderExist
 		}
-		return model.Order{}, model.ErrorOrderExistAnotheUser
+		return model.Order{}, model.ErrorOrderExistAnotherUser
 	}
 
 	// insert
@@ -144,5 +145,86 @@ func (s *orderRepository) GetForUser(ctx context.Context, userID uuid.UUID) ([]m
 		return nil, err
 	}
 
+	return userOrders, nil
+}
+
+func (s *orderRepository) UpdateStatusToNewBatch(ctx context.Context, batch []model.Order) (err error) {
+	if len(batch) == 0 {
+		return nil
+	}
+
+	tx, err := s.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if rollErr := tx.Rollback(); rollErr != nil {
+			log.Println("error rollback for orders batch status update")
+		}
+	}()
+
+	for _, o := range batch {
+		if _, err := tx.ExecContext(
+			ctx,
+			"UPDATE orders SET status = $1, accrual= $2  WHERE id = $3",
+			model.OrderStatusNew, 0, o.ID); err != nil {
+			return err
+		}
+	}
+
+	if err := tx.Commit(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *orderRepository) GetUnprocessedOrders(ctx context.Context, limit int) ([]model.Order, error) {
+	userOrders := make([]model.Order, 0)
+
+	//  init transaction
+	tx, err := s.db.BeginTx(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		tx.Rollback()
+		//todo: logging if err
+	}()
+
+	rows, err := tx.QueryContext(ctx,
+		"UPDATE orders SET status = $1"+
+			"WHERE id IN ( SELECT id FROM orders WHERE status = $2 or status = $3 LIMIT $4 ) RETURNING * ",
+		model.OrderStatusUpdating,
+		model.OrderStatusProcessing,
+		model.OrderStatusNew,
+		limit,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var order model.Order
+		if err = rows.Scan(
+			&order.ID,
+			&order.UserID,
+			&order.Number,
+			&order.UploadedAt,
+			&order.Status,
+			&order.Accrual,
+		); err != nil {
+			return nil, err
+		}
+
+		userOrders = append(userOrders, order)
+	}
+
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
 	return userOrders, nil
 }

@@ -8,7 +8,6 @@ import (
 	"github.com/atrush/diploma.git/pkg"
 	"github.com/atrush/diploma.git/services/auth"
 	"github.com/atrush/diploma.git/services/order"
-	"github.com/atrush/diploma.git/storage"
 	"net/http"
 )
 
@@ -16,19 +15,9 @@ type Server struct {
 	httpServer http.Server
 }
 
-func NewServer(cfg *pkg.Config, s storage.Storage) (*Server, error) {
+func NewServer(cfg *pkg.Config, a auth.Authenticator, o order.OrderManager) (*Server, error) {
 
-	jwtAuth, err := auth.NewAuth(s)
-	if err != nil {
-		return nil, fmt.Errorf("ошибка запуска server:%w", err)
-	}
-
-	svcOrder, err := order.NewOrder(s)
-	if err != nil {
-		return nil, fmt.Errorf("ошибка запуска server:%w", err)
-	}
-
-	h, err := handler.NewHandler(jwtAuth, svcOrder)
+	h, err := handler.NewHandler(a, o)
 	if err != nil {
 		return nil, fmt.Errorf("ошибка запуска server:%w", err)
 	}

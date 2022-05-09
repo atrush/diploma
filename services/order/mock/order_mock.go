@@ -66,6 +66,35 @@ func (mr *MockOrderManagerMockRecorder) GetForUser(ctx, userID interface{}) *gom
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetForUser", reflect.TypeOf((*MockOrderManager)(nil).GetForUser), ctx, userID)
 }
 
+// GetUnprocessedOrders mocks base method.
+func (m *MockOrderManager) GetUnprocessedOrders(ctx context.Context, limit int) ([]model.Order, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUnprocessedOrders", ctx, limit)
+	ret0, _ := ret[0].([]model.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUnprocessedOrders indicates an expected call of GetUnprocessedOrders.
+func (mr *MockOrderManagerMockRecorder) GetUnprocessedOrders(ctx, limit interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUnprocessedOrders", reflect.TypeOf((*MockOrderManager)(nil).GetUnprocessedOrders), ctx, limit)
+}
+
+// ReturnNotUpdatedOrders mocks base method.
+func (m *MockOrderManager) ReturnNotUpdatedOrders(ctx context.Context, batch []model.Order) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReturnNotUpdatedOrders", ctx, batch)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ReturnNotUpdatedOrders indicates an expected call of ReturnNotUpdatedOrders.
+func (mr *MockOrderManagerMockRecorder) ReturnNotUpdatedOrders(ctx, batch interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReturnNotUpdatedOrders", reflect.TypeOf((*MockOrderManager)(nil).ReturnNotUpdatedOrders), ctx, batch)
+}
+
 // UpdateAccrual mocks base method.
 func (m *MockOrderManager) UpdateAccrual(ctx context.Context, order model.Order, accrual model.Accrual) error {
 	m.ctrl.T.Helper()

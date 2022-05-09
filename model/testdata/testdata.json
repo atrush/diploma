@@ -2,52 +2,52 @@
   "Users": [
     {
       "ID": "dbcb017f-5ef0-40e5-9d0b-6db8f5e90c28",
-      "Login": "",
+      "Login": "a1",
       "PasswordHash": ""
     },
     {
       "ID": "ca7dde82-8f3f-4116-ba23-8956b615dc64",
-      "Login": "",
+      "Login": "a2",
       "PasswordHash": ""
     },
     {
       "ID": "57519be5-5bbf-45c2-8fdf-ab7742c8b90d",
-      "Login": "",
+      "Login": "a3",
       "PasswordHash": ""
     },
     {
       "ID": "274d70fc-bc86-45a7-aa4e-321ed4759c3c",
-      "Login": "",
+      "Login": "a4",
       "PasswordHash": ""
     },
     {
       "ID": "0ead2377-2352-41db-9967-7f4af1af175f",
-      "Login": "",
+      "Login": "a5",
       "PasswordHash": ""
     },
     {
       "ID": "7782003a-fe0d-47c5-8618-8d48c4083b71",
-      "Login": "",
+      "Login": "a6",
       "PasswordHash": ""
     },
     {
       "ID": "6cd6e611-060a-4786-87d2-bed991c7b8e9",
-      "Login": "",
+      "Login": "a7",
       "PasswordHash": ""
     },
     {
       "ID": "f94ce1f0-0439-4127-af15-ecd8ab406731",
-      "Login": "",
+      "Login": "a8",
       "PasswordHash": ""
     },
     {
       "ID": "432c93de-5b7b-4a54-80b9-4a519c229c0a",
-      "Login": "",
+      "Login": "a9",
       "PasswordHash": ""
     },
     {
       "ID": "d33aa93d-d75d-4a4a-9175-bff57de7a3e1",
-      "Login": "",
+      "Login": "a10",
       "PasswordHash": ""
     }
   ],
@@ -136,7 +136,7 @@
       "ID": "4b02efae-85a3-41a1-a223-73a918e2ef4f",
       "Number": "2044515743876311",
       "UserID": "0ead2377-2352-41db-9967-7f4af1af175f",
-      "Status": "NEW",
+      "Status": "INVALID",
       "Accrual": 0,
       "UploadedAt": "0001-01-01T00:00:00Z"
     },
@@ -144,7 +144,7 @@
       "ID": "48aa889c-94bc-47dc-947e-49a555ae9eda",
       "Number": "2141885384266300",
       "UserID": "432c93de-5b7b-4a54-80b9-4a519c229c0a",
-      "Status": "NEW",
+      "Status": "PROCESSING",
       "Accrual": 0,
       "UploadedAt": "0001-01-01T00:00:00Z"
     },
@@ -195,8 +195,8 @@
     },
     {
       "Number": "1701803731677230",
-      "Status": "PROCESSED",
-      "Accrual": 30000
+      "Status": "PROCESSING",
+      "Accrual": 0
     },
     {
       "Number": "4246720124876623",
@@ -210,7 +210,7 @@
     },
     {
       "Number": "2044515743876311",
-      "Status": "PROCESSING",
+      "Status": "INVALID",
       "Accrual": 0
     },
     {

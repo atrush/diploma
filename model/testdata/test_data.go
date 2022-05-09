@@ -3,6 +3,7 @@ package testdata
 import (
 	"bufio"
 	"encoding/json"
+	"fmt"
 	"github.com/atrush/diploma.git/model"
 	"github.com/atrush/diploma.git/pkg/luhn"
 	"github.com/google/uuid"
@@ -10,11 +11,9 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"path"
+	"runtime"
 	"time"
-)
-
-const (
-	testFile = "testdata.json"
 )
 
 type TestData struct {
@@ -23,20 +22,24 @@ type TestData struct {
 	Accruals []model.Accrual
 }
 
-func ReadTestDataMust() TestData {
+const (
+	testFile = "testdata.json"
+)
+
+func ReadTestData() (*TestData, error) {
 	result := TestData{}
 
-	data, err := ioutil.ReadFile(testFile)
+	data, err := ioutil.ReadFile(getPath())
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	err = json.Unmarshal(data, &result)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return result
+	return &result, nil
 }
 
 func GenOrders(count int, status model.OrderStatus) (uuid.UUID, []model.Order) {
@@ -62,7 +65,7 @@ func genNewDataFile() {
 
 	for i := 0; i < 10; i++ {
 		userID, userOrders := GenOrders(rand.Intn(5), model.OrderStatusNew)
-		testData.Users = append(testData.Users, model.User{ID: userID})
+		testData.Users = append(testData.Users, model.User{ID: userID, Login: fmt.Sprintf("a%v", i)})
 
 		testData.Orders = append(testData.Orders, userOrders...)
 
@@ -98,6 +101,16 @@ func WriteToFileMust(data []byte, filename string) {
 	if err := writer.WriteByte('\n'); err != nil {
 		log.Fatal("ошибка записи в файл: %w", err)
 	}
+}
+
+// getFixturesDir returns current file directory.
+func getPath() string {
+	_, filePath, _, ok := runtime.Caller(1)
+	if !ok {
+		return ""
+	}
+
+	return path.Join(path.Dir(filePath), testFile)
 }
 
 //

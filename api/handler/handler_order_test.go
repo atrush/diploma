@@ -218,7 +218,7 @@ func mockOrderExistForUser(ctrl *gomock.Controller) *mk.MockOrderManager {
 }
 func mockOrderExistForAnotherUser(ctrl *gomock.Controller) *mk.MockOrderManager {
 	orderMock := mk.NewMockOrderManager(ctrl)
-	orderMock.EXPECT().AddToUser(gomock.Any(), gomock.Any(), userID).Return(model.Order{}, model.ErrorOrderExistAnotheUser)
+	orderMock.EXPECT().AddToUser(gomock.Any(), gomock.Any(), userID).Return(model.Order{}, model.ErrorOrderExistAnotherUser)
 	return orderMock
 }
 func mockOrderSaved(ctrl *gomock.Controller) *mk.MockOrderManager {

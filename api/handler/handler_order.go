@@ -52,7 +52,7 @@ func (h *Handler) OrderAddToUser(w http.ResponseWriter, r *http.Request) {
 	_, err = h.svcOrder.AddToUser(r.Context(), strNumber, userID)
 	if err != nil {
 		//  409 if exist for another user
-		if errors.Is(err, model.ErrorOrderExistAnotheUser) {
+		if errors.Is(err, model.ErrorOrderExistAnotherUser) {
 			http.Error(w, err.Error(), http.StatusConflict)
 			return
 		}

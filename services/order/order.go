@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var _OrderManager = (*Order)(nil)
+var _ OrderManager = (*Order)(nil)
 
 type Order struct {
 	storage storage.Storage
@@ -19,6 +19,9 @@ func NewOrder(s storage.Storage) (*Order, error) {
 	return &Order{
 		storage: s,
 	}, nil
+}
+func (o *Order) GetUnprocessedOrders(ctx context.Context, limit int) ([]model.Order, error) {
+	return o.storage.Order().GetUnprocessedOrders(ctx, limit)
 }
 
 func (o *Order) AddToUser(ctx context.Context, number string, userID uuid.UUID) (model.Order, error) {
@@ -70,4 +73,8 @@ func (o *Order) GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Order
 		return nil, err
 	}
 	return userOrders, nil
+}
+
+func (o *Order) ReturnNotUpdatedOrders(ctx context.Context, batch []model.Order) error {
+	return o.storage.Order().UpdateStatusToNewBatch(ctx, batch)
 }
