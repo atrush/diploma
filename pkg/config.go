@@ -10,14 +10,14 @@ import (
 type Config struct {
 	ServerAddress  string `env:"RUN_ADDRESS"`
 	AccrualAddress string `env:"ACCRUAL_SYSTEM_ADDRESS"`
-	DatabaseDSN    string `env:"DATABASE_DSN"`
+	DatabaseDSN    string `env:"DATABASE_URI"`
 }
 
 //  Default config params.
 const (
-	defDatabaseDSN    = ""
-	defServerAddress  = ""
-	defAccrualAddress = ""
+	defDatabaseDSN    = "postgres://postgres:postgres@localhost:5432/tstdb?sslmode=disable"
+	defServerAddress  = ":8070"
+	defAccrualAddress = "localhost:8090"
 )
 
 //  NewConfig inits new config.

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/atrush/diploma.git/api"
 	"github.com/atrush/diploma.git/pkg"
 	prov_accual "github.com/atrush/diploma.git/provider/accrual"
@@ -23,17 +24,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	//fmt.Printf("config dsn: %v" \n, cfg.DatabaseDSN)
 
-	//cont, err := testtools.NewPostgreSQLContainer(context.Background())
-	//if err != nil {
-	//	log.Fatal(err.Error())
-	//}
-	//
-	//tt := time.Minute
-	//defer cont.Stop(context.Background(), &tt)
-
-	db, err := psql.NewTestStorage()
+	db, err := psql.NewStorage(cfg.DatabaseDSN)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -48,7 +40,7 @@ func main() {
 		log.Fatalf("error starting order service:%v", err.Error())
 	}
 
-	accProv, err := prov_accual.NewAccrual("http://localhost:8090/api/orders")
+	accProv, err := prov_accual.NewAccrual(fmt.Sprintf("http://%v/api/orders", cfg.AccrualAddress))
 	if err != nil {
 		log.Fatalf("error starting accrual provider:%v", err.Error())
 	}

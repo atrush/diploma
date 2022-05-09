@@ -41,6 +41,10 @@ func (a *Accrual) Get(ctx context.Context, number string) (model.Accrual, error)
 	client := http.Client{}
 	r, err := client.Do(request)
 
+	if err != nil {
+		return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
+	}
+
 	// 200 parse and check response
 	if r.StatusCode == http.StatusOK {
 		var respObj model2.AccrualResponse

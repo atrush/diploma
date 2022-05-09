@@ -20,12 +20,12 @@ type Storage struct {
 
 //  NewStorage inits new connection to psql storage.
 //  !!!! On init drop all and init tables.
-func NewStorage(conStringDSN string) (*Storage, error) {
-	if conStringDSN == "" {
+func NewStorage(dsn string) (*Storage, error) {
+	if dsn == "" {
 		return nil, fmt.Errorf("ошибка инициализации бд:%v", "строка соединения с бд пуста")
 	}
 
-	db, err := sql.Open("postgres", conStringDSN)
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func NewStorage(conStringDSN string) (*Storage, error) {
 
 	st := &Storage{
 		db:           db,
-		conStringDSN: conStringDSN,
+		conStringDSN: dsn,
 	}
 
 	st.orderRepo = newOrderRepository(db)
@@ -51,9 +51,8 @@ func NewStorage(conStringDSN string) (*Storage, error) {
 	return st, nil
 }
 
-func NewTestStorage() (*Storage, error) {
+func NewTestStorage(dsn string) (*Storage, error) {
 
-	dsn := "postgres://postgres:postgres@localhost:5432/tstdb?sslmode=disable"
 	st, err := NewStorage(dsn)
 	if err != nil {
 		return nil, err

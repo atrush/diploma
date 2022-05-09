@@ -94,7 +94,6 @@ func (s AccrualService) tick(ctx context.Context, batch []model.Order, process A
 
 loop:
 	for i, o := range batch {
-		lastProcessedIndex = i
 		select {
 
 		//  if received limiter change action - pauses, sets accrual limiter, stops tick
@@ -110,15 +109,18 @@ loop:
 		//  on default - starts waits limiter, starts order process
 		//  if context closed - limiter returns error, stops tick
 		default:
+
 			if err := s.limiter.Wait(ctx); err != nil {
 				log.Printf("err %s: %s", o.Number, err.Error())
 
 				break loop
 			}
 
+			lastProcessedIndex = i
+			log.Printf("process %v, number: %v", lastProcessedIndex, o.Number)
 			o := o
 			go func() {
-				log.Printf("process %v", lastProcessedIndex)
+				log.Printf("go process %v, number: %v", lastProcessedIndex, o.Number)
 				defer wg.Done()
 
 				process(ctx, o, chanLimit)
@@ -127,13 +129,15 @@ loop:
 	}
 
 	//  if exist not processed orders, clear change wait group count
-	if lastProcessedIndex < len(batch) {
-		if err := s.svcOrders.ReturnNotUpdatedOrders(context.Background(), batch[lastProcessedIndex:]); err != nil {
+	processedCount := lastProcessedIndex + 1
+	if processedCount < len(batch) {
+		returnOrders := batch[processedCount:]
+		if err := s.svcOrders.ReturnNotUpdatedOrders(context.Background(), returnOrders); err != nil {
 			log.Printf("error on returning unprocessed orders:%v", err.Error())
 		}
 
-		pass := (len(batch) - lastProcessedIndex)
-		log.Printf("not processed :%v", pass)
+		pass := (len(batch) - processedCount)
+		log.Printf("not processed :%v", len(returnOrders))
 
 		wg.Add(-1 * pass)
 	}
@@ -148,7 +152,7 @@ loop:
 //  if returns error - sets to order status NEW back
 func (s *AccrualService) processAccrualForOrder(ctx context.Context, order model.Order, limiterChan chan LimiterChange) {
 	isProcessed := false
-	ctxGet, cancel := context.WithTimeout(ctx, 1*time.Second)
+	ctxGet, cancel := context.WithTimeout(ctx, 2*time.Second)
 
 	defer func() {
 		cancel()
