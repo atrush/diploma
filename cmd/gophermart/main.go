@@ -50,7 +50,7 @@ func main() {
 		log.Fatalf("error starting withdraw service:%v", err.Error())
 	}
 
-	accProv, err := prov_accual.NewAccrual(fmt.Sprintf("http://%v/api/orders", cfg.AccrualAddress))
+	accProv, err := prov_accual.NewAccrual(fmt.Sprintf("%v/api/orders", cfg.AccrualAddress))
 	if err != nil {
 		log.Fatalf("error starting accrual provider:%v", err.Error())
 	}

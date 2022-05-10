@@ -29,18 +29,19 @@ func NewAccrual(url string) (*Accrual, error) {
 
 // RequestAccrual
 func (a *Accrual) Get(ctx context.Context, number string) (model.Accrual, error) {
-	request, err := http.NewRequestWithContext(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("%s/%s", a.serviceURL, number),
-		nil,
-	)
-	if err != nil {
-		return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
-	}
-	client := http.Client{}
-	r, err := client.Do(request)
-
+	//request, err := http.NewRequestWithContext(
+	//	ctx,
+	//	http.MethodGet,
+	//	fmt.Sprintf("%s/%s", a.serviceURL, number),
+	//	nil,
+	//)
+	//if err != nil {
+	//	return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
+	//}
+	//client := http.Client{}
+	//r, err := client.Do(request)
+	r, err := http.Get(fmt.Sprintf("%s/%s", a.serviceURL, number))
+	log.Println(fmt.Sprintf("%s/%s", a.serviceURL, number))
 	if err != nil {
 		return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
 	}
