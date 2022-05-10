@@ -6,6 +6,7 @@ import (
 	"github.com/atrush/diploma.git/model"
 	"github.com/atrush/diploma.git/storage"
 	"github.com/google/uuid"
+	"log"
 )
 
 var _ storage.WithdrawRepository = (*withdrawRepository)(nil)
@@ -96,6 +97,7 @@ func (w *withdrawRepository) Create(ctx context.Context, withdraw model.Withdraw
 		sum -= w
 	}
 
+	log.Printf("withdraw sum %v balance %v", withdraw.Sum, sum)
 	if withdraw.Sum > sum {
 		return model.Withdraw{}, model.ErrorNotEnoughFounds
 	}
