@@ -9,6 +9,39 @@ import (
 	"net/http"
 )
 
+//  GetBalance returns user balance,
+//  200 — success,
+//  401 — user not authenticated,
+//  500 — server error.
+func (h *Handler) GetBalance(w http.ResponseWriter, r *http.Request) {
+	// context must contain user id, if not its internal error
+	userID, err := h.GetUserIDFromContext(r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	balance, err := h.svcWithdraw.GetBalance(r.Context(), userID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	jsResult, err := json.Marshal(apimodel.BalanceResponseFromCanonical(balance))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+	if _, err := w.Write(jsResult); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
 //  WithdrawAddToUser adds withdraw to user.
 //  200 — success;
 //  401 — user not authenticated,

@@ -12,4 +12,6 @@ type WithdrawManager interface {
 	Create(ctx context.Context, withdraw model.Withdraw) (model.Withdraw, error)
 	//  GetForUser returns withdraws for user
 	GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Withdraw, error)
+	//  GetBalance returns user balance
+	GetBalance(ctx context.Context, userID uuid.UUID) (model.Balance, error)
 }

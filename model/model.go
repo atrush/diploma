@@ -66,3 +66,8 @@ type Withdraw struct {
 	Sum        int
 	UploadedAt time.Time
 }
+
+type Balance struct {
+	Accruals    int
+	Withdrawals int
+}

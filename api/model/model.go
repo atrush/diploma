@@ -38,10 +38,22 @@ type (
 		ProcessedAt string  `json:"processed_at"`
 	}
 
+	BalanceResponse struct {
+		Accruals    float64 `json:"current"`
+		Withdrawals float64 `json:"withdrawn"`
+	}
+
 	ContextKey string
 )
 
 var ContextKeyUserID = ContextKey("user-id")
+
+func BalanceResponseFromCanonical(b model.Balance) BalanceResponse {
+	return BalanceResponse{
+		Accruals:    float64(b.Accruals) / float64(model.MoneyAccuracy),
+		Withdrawals: float64(b.Withdrawals) / float64(model.MoneyAccuracy),
+	}
+}
 
 func (w *WithdrawRequest) ToCanonical(userID uuid.UUID) model.Withdraw {
 	return model.Withdraw{
@@ -95,7 +107,7 @@ func OrderResponseListFromCanonical(objs []model.Order) []OrderResponse {
 			UploadedAt: order.UploadedAt.Format(time.RFC3339),
 		}
 		if order.Accrual > 0 {
-			o.Accrual = float64(order.Accrual) / model.MoneyAccuracy
+			o.Accrual = float64(order.Accrual) / float64(model.MoneyAccuracy)
 		}
 
 		responseArr = append(responseArr, o)

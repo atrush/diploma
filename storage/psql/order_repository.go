@@ -248,7 +248,7 @@ func (o *orderRepository) GetUserAccrualsSum(ctx context.Context, userID uuid.UU
 		); err != nil {
 			return 0, err
 		}
-		sum -= w
+		sum += w
 	}
 
 	return sum, nil

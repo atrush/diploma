@@ -184,7 +184,7 @@ func (w *withdrawRepository) GetUserWithdrawalsSum(ctx context.Context, userID u
 		); err != nil {
 			return 0, err
 		}
-		sum -= w
+		sum += w
 	}
 
 	return sum, nil
