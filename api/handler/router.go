@@ -11,7 +11,7 @@ func NewRouter(handler *Handler) *chi.Mux {
 	tokenAuth := jwtauth.New("HS256", []byte("secret"), nil)
 
 	r := chi.NewRouter()
-	r.Use(middleware.Compress(5))
+	//r.Use(middleware.Compress(5))
 
 	r.Group(func(r chi.Router) {
 		r.Use(middleware.AllowContentType("application/json"))
