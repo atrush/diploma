@@ -19,7 +19,6 @@ type TestAccrualProvider struct {
 var _ accrual.AccrualProvider = (*TestAccrualProvider)(nil)
 
 func NewTestAccrualProvider() (*TestAccrualProvider, error) {
-
 	d, err := testdata.ReadTestData()
 	if err != nil {
 		return nil, err
@@ -44,5 +43,6 @@ func (t *TestAccrualProvider) Get(ctx context.Context, number string) (model.Acc
 			return a, nil
 		}
 	}
+
 	return model.Accrual{}, nil
 }

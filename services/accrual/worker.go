@@ -52,23 +52,20 @@ func (s *AccrualService) Run(ctx context.Context) error {
 			ticker.Stop()
 		}()
 		for {
-			//log.Println("for")
 			select {
 			case <-ticker.C:
 				batch, err := s.svcOrders.GetUnprocessedOrders(ctx, batchSize)
-				//log.Printf("start processing batch length:%v", len(batch))
+
 				if err != nil {
 					log.Printf("error getting new orders to process accruals, err:%s", err.Error())
 					break
 				}
 
 				if len(batch) == 0 {
-					//log.Println("no new orders to process accruals")
 					break
 				}
 
 				s.tick(ctx, batch, s.processAccrualForOrder)
-				//log.Printf("end processing batch length:%v", len(batch))
 			case <-ctx.Done():
 				log.Println("accrual worker context done")
 				return
@@ -99,7 +96,6 @@ loop:
 		//  if received limiter change action - pauses, sets accrual limiter, stops tick
 		case limit := <-chanLimit:
 			perSec := float64(limit.PerMinute) / float64(60)
-			//log.Printf("changesleep %v, per second %v", limit.WaitSeconds, perSec)
 
 			time.Sleep((time.Duration)(limit.WaitSeconds) * time.Second)
 			s.limiter.SetLimit(rate.Limit(perSec))
@@ -117,10 +113,8 @@ loop:
 			}
 
 			lastProcessedIndex = i
-			//log.Printf("process %v, number: %v", lastProcessedIndex, o.Number)
 			o := o
 			go func() {
-				//log.Printf("go process %v, number: %v", lastProcessedIndex, o.Number)
 				defer wg.Done()
 
 				process(ctx, o, chanLimit)
@@ -137,13 +131,11 @@ loop:
 		}
 
 		pass := (len(batch) - processedCount)
-		//log.Printf("not processed :%v", len(returnOrders))
 
 		wg.Add(-1 * pass)
 	}
 
 	wg.Wait()
-	//log.Println("all ended")
 }
 
 //  processAccrualForOrder gets accrual from provider and updates order
@@ -166,7 +158,6 @@ func (s *AccrualService) processAccrualForOrder(ctx context.Context, order model
 
 	accrualObj, err := s.client.Get(ctxGet, order.Number)
 	if err != nil {
-		//log.Printf("error accrual get order number :%v, err:%s", order.Number, err.Error())
 
 		if errors.Is(err, &model.ErrorAccrualLimitAchieved{}) {
 			achieveErr, _ := err.(*model.ErrorAccrualLimitAchieved)

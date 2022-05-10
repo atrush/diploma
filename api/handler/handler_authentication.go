@@ -39,7 +39,6 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 	if err := h.setToken(w, user.ID); err != nil {
 		return
 	}
-
 }
 
 //  Login authenticates user, sets jwt token.
@@ -71,7 +70,6 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	if err := h.setToken(w, user.ID); err != nil {
 		return
 	}
-
 }
 
 //  readLoginRequest reads login data from request.
@@ -79,15 +77,14 @@ func (h Handler) readLoginRequest(w http.ResponseWriter, r *http.Request) (model
 	var loginData model.LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&loginData); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
-
 		return model.LoginRequest{}, fmt.Errorf("wrong data format")
 	}
 	defer r.Body.Close()
 	if err := loginData.Validate(); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
-
 		return model.LoginRequest{}, fmt.Errorf("wrong data format")
 	}
+
 	return loginData, nil
 }
 
@@ -97,7 +94,6 @@ func (h Handler) setToken(w http.ResponseWriter, userID uuid.UUID) error {
 	token, err := h.svcAuth.EncodeTokenUserID(userID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-
 		return err
 	}
 

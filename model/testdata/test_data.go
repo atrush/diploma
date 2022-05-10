@@ -55,6 +55,7 @@ func GenOrders(count int, status model.OrderStatus) (uuid.UUID, []model.Order) {
 			Status: status,
 		})
 	}
+
 	return userID, result
 }
 
@@ -112,10 +113,3 @@ func getPath() string {
 
 	return path.Join(path.Dir(filePath), testFile)
 }
-
-//
-//func TestWorker_tick(t *testing.T) {
-//	genNewDataFile()
-//	data := ReadTestDataMust()
-//	log.Printf("%+v", data)
-//}

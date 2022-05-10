@@ -27,21 +27,6 @@ type TestMiddleware struct {
 	expectedCode    int               // expected response http status
 }
 
-//
-//nextHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-//	val := r.Context().Value(ContextKeyUserID)
-//	if val == nil {
-//		t.Error("user id not present")
-//	}
-//	valStr, ok := val.(string)
-//	if !ok {
-//		t.Error("not string")
-//	}
-//	if valStr != "1234" {
-//		t.Error("wrong reqId")
-//	}
-//})
-
 func (tt *TestMiddleware) CheckTest(t *testing.T) {
 
 	h := tt.nextHandler

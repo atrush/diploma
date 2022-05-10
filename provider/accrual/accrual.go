@@ -103,12 +103,5 @@ func (a *Accrual) Get(ctx context.Context, number string) (model.Accrual, error)
 		}
 	}
 
-	//- `REGISTERED` — заказ зарегистрирован, но не начисление не рассчитано;
-	//- `INVALID` — заказ не принят к расчёту, и вознаграждение не будет начислено;
-	//- `PROCESSING` — расчёт начисления в процессе;
-	//- `PROCESSED` — расчёт начисления окончен;
-
-	// 429 - too many requests, pause
-	// if 500 or unexpected status return error
 	return model.Accrual{}, fmt.Errorf("error accrual request: response status code:%v", r.StatusCode)
 }

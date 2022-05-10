@@ -26,11 +26,6 @@ func NewHandler(auth auth.Authenticator, order order.OrderManager, withdraw with
 	}, nil
 }
 
-// Ok return ok status
-func (h *Handler) Ok(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-}
-
 func (h *Handler) GetUserIDFromContext(r *http.Request) (uuid.UUID, error) {
 	ctxID := r.Context().Value(model.ContextKeyUserID)
 	if ctxID == nil {
