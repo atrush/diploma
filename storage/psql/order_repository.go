@@ -3,7 +3,6 @@ package psql
 import (
 	"context"
 	"database/sql"
-	"errors"
 	"github.com/atrush/diploma.git/model"
 	"github.com/atrush/diploma.git/storage"
 	"github.com/google/uuid"
@@ -65,11 +64,10 @@ func (r *orderRepository) Create(ctx context.Context, order model.Order) (model.
 	userID := uuid.Nil
 	err = tx.QueryRowContext(
 		ctx,
-		`SELECT user_id FROM orders WHERE number = $2 AND user_id = $1 LIMIT 1`,
-		order.UserID,
+		`SELECT user_id FROM orders WHERE number = $1 LIMIT 1`,
 		order.Number).Scan(&userID)
 
-	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+	if err != nil {
 		return model.Order{}, err
 	}
 
