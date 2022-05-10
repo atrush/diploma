@@ -89,7 +89,10 @@ func (w *withdrawRepository) Create(ctx context.Context, withdraw model.Withdraw
 		return model.Withdraw{}, err
 	}
 
-	defer rowsWithdraws.Close()
+	defer func() {
+		_ = rowsWithdraws.Close()
+		_ = rowsWithdraws.Err()
+	}()
 
 	for rowsWithdraws.Next() {
 		var w int
@@ -178,7 +181,10 @@ func (w *withdrawRepository) GetUserWithdrawalsSum(ctx context.Context, userID u
 		return 0, err
 	}
 
-	defer rowsWithdraws.Close()
+	defer func() {
+		_ = rowsWithdraws.Close()
+		_ = rowsWithdraws.Err()
+	}()
 
 	sum := 0
 	for rowsWithdraws.Next() {

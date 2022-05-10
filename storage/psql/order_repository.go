@@ -239,11 +239,15 @@ func (o *orderRepository) GetUserAccrualsSum(ctx context.Context, userID uuid.UU
 		userID,
 		model.OrderStatusProcessed,
 	)
+
 	if err != nil {
 		return 0, err
 	}
 
-	defer rows.Close()
+	defer func() {
+		_ = rows.Close()
+		_ = rows.Err()
+	}()
 
 	sum := 0
 	for rows.Next() {
