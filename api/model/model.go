@@ -28,8 +28,8 @@ type (
 	}
 
 	WithdrawRequest struct {
-		Number string `json:"order"`
-		Sum    int    `json:"sum"`
+		Number string  `json:"order"`
+		Sum    float64 `json:"sum"`
 	}
 
 	WithdrawResponse struct {
@@ -47,7 +47,7 @@ func (w *WithdrawRequest) ToCanonical(userID uuid.UUID) model.Withdraw {
 	return model.Withdraw{
 		UserID: userID,
 		Number: w.Number,
-		Sum:    w.Sum * model.MoneyAccuracy,
+		Sum:    int(w.Sum * model.MoneyAccuracy),
 	}
 }
 
@@ -74,7 +74,7 @@ func WithdrawResponseListFromCanonical(objs []model.Withdraw) []WithdrawResponse
 	for _, el := range objs {
 		o := WithdrawResponse{
 			Number:      el.Number,
-			Sum:         float64(el.Sum) / model.MoneyAccuracy,
+			Sum:         float64(el.Sum) / float64(model.MoneyAccuracy),
 			ProcessedAt: el.UploadedAt.Format(time.RFC3339),
 		}
 
