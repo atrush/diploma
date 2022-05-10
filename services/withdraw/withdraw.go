@@ -40,5 +40,5 @@ func (o *Withdraw) GetBalance(ctx context.Context, userID uuid.UUID) (model.Bala
 		return model.Balance{}, err
 	}
 
-	return model.Balance{Accruals: accrualsSum, Withdrawals: withdrawalsSum}, nil
+	return model.Balance{Actual: accrualsSum - withdrawalsSum, Withdrawals: withdrawalsSum}, nil
 }

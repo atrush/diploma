@@ -50,7 +50,7 @@ var ContextKeyUserID = ContextKey("user-id")
 
 func BalanceResponseFromCanonical(b model.Balance) BalanceResponse {
 	return BalanceResponse{
-		Accruals:    float64(b.Accruals) / float64(model.MoneyAccuracy),
+		Accruals:    float64(b.Actual) / float64(model.MoneyAccuracy),
 		Withdrawals: float64(b.Withdrawals) / float64(model.MoneyAccuracy),
 	}
 }
