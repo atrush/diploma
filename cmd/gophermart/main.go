@@ -10,6 +10,7 @@ import (
 	"github.com/atrush/diploma.git/services/accrual"
 	"github.com/atrush/diploma.git/services/auth"
 	"github.com/atrush/diploma.git/services/order"
+	"github.com/atrush/diploma.git/services/withdraw"
 	"github.com/atrush/diploma.git/storage/psql"
 	"log"
 	"net/http"
@@ -44,6 +45,11 @@ func main() {
 		log.Fatalf("error starting order service:%v", err.Error())
 	}
 
+	svcWithdraw, err := withdraw.NewWithdraw(db)
+	if err != nil {
+		log.Fatalf("error starting withdraw service:%v", err.Error())
+	}
+
 	accProv, err := prov_accual.NewAccrual(fmt.Sprintf("http://%v/api/orders", cfg.AccrualAddress))
 	if err != nil {
 		log.Fatalf("error starting accrual provider:%v", err.Error())
@@ -60,7 +66,7 @@ func main() {
 		log.Fatalf("error starting accrual worker:%v", err.Error())
 	}
 
-	server, err := api.NewServer(cfg, jwtAuth, svcOrder)
+	server, err := api.NewServer(cfg, jwtAuth, svcOrder, svcWithdraw)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
