@@ -3,6 +3,7 @@ package psql
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"github.com/atrush/diploma.git/model"
 	"github.com/atrush/diploma.git/storage"
 	"github.com/google/uuid"
@@ -71,7 +72,7 @@ func (o *orderRepository) Create(ctx context.Context, order model.Order) (model.
 		return model.Order{}, err
 	}
 
-	if userID != uuid.Nil {
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		if userID == order.UserID {
 			return model.Order{}, model.ErrorOrderExist
 		}
