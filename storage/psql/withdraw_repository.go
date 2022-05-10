@@ -59,8 +59,13 @@ func (w *withdrawRepository) Create(ctx context.Context, withdraw model.Withdraw
 		withdraw.UserID,
 		model.OrderStatusProcessed,
 	)
+
 	if err != nil {
 		return model.Withdraw{}, err
+	}
+
+	if rowsOrders.Err() != nil {
+		return model.Withdraw{}, rowsOrders.Err()
 	}
 
 	defer rowsOrders.Close()
@@ -156,8 +161,7 @@ func (w *withdrawRepository) GetForUser(ctx context.Context, userID uuid.UUID) (
 		userWithdraws = append(userWithdraws, el)
 	}
 
-	err = rows.Err()
-	if err != nil {
+	if rows.Err() != nil {
 		return nil, err
 	}
 

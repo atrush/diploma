@@ -205,6 +205,10 @@ func (o *orderRepository) GetUnprocessedOrders(ctx context.Context, limit int) (
 		return nil, err
 	}
 
+	if rows.Err() != nil {
+		return nil, rows.Err()
+	}
+
 	defer rows.Close()
 
 	for rows.Next() {

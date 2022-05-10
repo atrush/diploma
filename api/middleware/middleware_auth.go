@@ -31,7 +31,7 @@ func MiddlewareAuth(next http.Handler) http.Handler {
 		// Token is authenticated, parse claims
 		userID, ok := claims["user_id"]
 		if !ok {
-			http.Error(w, err.Error(), http.StatusUnauthorized)
+			http.Error(w, "wrong user id", http.StatusUnauthorized)
 			return
 		}
 
