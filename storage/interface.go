@@ -40,6 +40,8 @@ type OrderRepository interface {
 	GetUnprocessedOrders(ctx context.Context, limit int) ([]model.Order, error)
 	//  UpdateStatusToNewBatch Updates statuse to new and sets accrual to 0, for batch orders
 	UpdateStatusToNewBatch(ctx context.Context, batch []model.Order) (err error)
+	// GetUserWithdrawalsSum returns user accruals sum
+	GetUserAccrualsSum(ctx context.Context, userID uuid.UUID) (int, error)
 }
 
 type WithdrawRepository interface {
@@ -48,4 +50,6 @@ type WithdrawRepository interface {
 	Create(ctx context.Context, withdraw model.Withdraw) (model.Withdraw, error)
 	//  GetForUser returns user withdrraws
 	GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Withdraw, error)
+	// GetUserWithdrawalsSum returns user withdrawals sum
+	GetUserWithdrawalsSum(ctx context.Context, userID uuid.UUID) (int, error)
 }

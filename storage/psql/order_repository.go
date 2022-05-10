@@ -68,11 +68,11 @@ func (o *orderRepository) Create(ctx context.Context, order model.Order) (model.
 		`SELECT user_id FROM orders WHERE number = $1 LIMIT 1`,
 		order.Number).Scan(&userID)
 
-	if err != nil {
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		return model.Order{}, err
 	}
 
-	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+	if userID != uuid.Nil {
 		if userID == order.UserID {
 			return model.Order{}, model.ErrorOrderExist
 		}
@@ -226,4 +226,30 @@ func (o *orderRepository) GetUnprocessedOrders(ctx context.Context, limit int) (
 		return nil, err
 	}
 	return userOrders, nil
+}
+
+func (o *orderRepository) GetUserAccrualsSum(ctx context.Context, userID uuid.UUID) (int, error) {
+	rows, err := o.db.QueryContext(ctx,
+		"SELECT accrual FROM orders WHERE user_id = $1 AND status = $2",
+		userID,
+		model.OrderStatusProcessed,
+	)
+	if err != nil {
+		return 0, err
+	}
+
+	defer rows.Close()
+
+	sum := 0
+	for rows.Next() {
+		var w int
+		if err = rows.Scan(
+			&w,
+		); err != nil {
+			return 0, err
+		}
+		sum -= w
+	}
+
+	return sum, nil
 }

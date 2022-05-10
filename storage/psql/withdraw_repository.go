@@ -163,3 +163,29 @@ func (w *withdrawRepository) GetForUser(ctx context.Context, userID uuid.UUID) (
 
 	return userWithdraws, nil
 }
+
+func (w *withdrawRepository) GetUserWithdrawalsSum(ctx context.Context, userID uuid.UUID) (int, error) {
+	//  calc user withdraws
+	rowsWithdraws, err := w.db.QueryContext(ctx,
+		"SELECT sum FROM withdraws WHERE user_id = $1",
+		userID,
+	)
+	if err != nil {
+		return 0, err
+	}
+
+	defer rowsWithdraws.Close()
+
+	sum := 0
+	for rowsWithdraws.Next() {
+		var w int
+		if err = rowsWithdraws.Scan(
+			&w,
+		); err != nil {
+			return 0, err
+		}
+		sum -= w
+	}
+
+	return sum, nil
+}
