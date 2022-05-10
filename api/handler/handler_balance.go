@@ -93,7 +93,7 @@ func (h *Handler) WithdrawAddToUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//  202 if order saved
-	w.WriteHeader(http.StatusAccepted)
+	w.WriteHeader(http.StatusOK)
 }
 
 //  WithdrawsGetListForUser returns user withdraws list

@@ -36,17 +36,15 @@ func (a *Accrual) Get(ctx context.Context, number string) (model.Accrual, error)
 		nil,
 	)
 	if err != nil {
-		log.Printf("client error %v", err.Error())
 		return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
 	}
 	client := http.Client{}
 	r, err := client.Do(request)
 
 	if err != nil {
-		log.Printf("get error %v", err.Error())
 		return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
 	}
-	log.Printf("resp%v status", r.StatusCode)
+
 	// 200 parse and check response
 	if r.StatusCode == http.StatusOK {
 		var respObj model_api.AccrualResponse
@@ -55,7 +53,6 @@ func (a *Accrual) Get(ctx context.Context, number string) (model.Accrual, error)
 		defer r.Body.Close()
 
 		if err := decoder.Decode(&respObj); err != nil {
-			log.Printf("accrual decode err %v", err.Error())
 			return model.Accrual{}, fmt.Errorf("error accrual request: error decode json response:%w", err)
 		}
 
@@ -70,7 +67,6 @@ func (a *Accrual) Get(ctx context.Context, number string) (model.Accrual, error)
 				fmt.Errorf("error accrual request: response number %v does not match order bumber %v",
 					accrual.Number, number)
 		}
-		log.Printf("accrual %+v parsed", accrual)
 		return accrual, nil
 
 	}
