@@ -3,6 +3,8 @@ package model
 import (
 	"fmt"
 	"github.com/atrush/diploma.git/model"
+	"github.com/atrush/diploma.git/pkg/validation"
+	"github.com/google/uuid"
 	"time"
 )
 
@@ -18,16 +20,40 @@ type (
 		Accrual    float64 `json:"accrual,omitempty"`
 		UploadedAt string  `json:"uploaded_at"`
 	}
+
 	AccrualResponse struct {
 		Number  string `json:"order"`
 		Status  string `json:"status"`
 		Accrual int    `json:"accrual,omitempty"`
 	}
 
+	WithdrawRequest struct {
+		Number string `json:"order"`
+		Sum    int    `json:"sum"`
+	}
+
+	WithdrawResponse struct {
+		Number      string  `json:"order"`
+		Sum         float64 `json:"sum"`
+		ProcessedAt string  `json:"processed_at"`
+	}
+
 	ContextKey string
 )
 
 var ContextKeyUserID = ContextKey("user-id")
+
+func (w *WithdrawRequest) ToCanonical(userID uuid.UUID) model.Withdraw {
+	return model.Withdraw{
+		UserID: userID,
+		Number: w.Number,
+		Sum:    w.Sum * model.MoneyAccuracy,
+	}
+}
+
+func (w *WithdrawRequest) NumberIsValidLuhn() bool {
+	return len(w.Number) > 0 && validation.ValidLuhn(w.Number)
+}
 
 func (a *AccrualResponse) ToCanonical() (model.Accrual, error) {
 	status := model.AccrualStatus(a.Status)
@@ -39,6 +65,23 @@ func (a *AccrualResponse) ToCanonical() (model.Accrual, error) {
 		Number:  a.Number,
 		Accrual: a.Accrual * model.MoneyAccuracy,
 	}, nil
+}
+
+//  WithdrawResponseListFromCanonical makes list of WithdrawResponse from canonical withdraw.
+func WithdrawResponseListFromCanonical(objs []model.Withdraw) []WithdrawResponse {
+	responseArr := make([]WithdrawResponse, 0, len(objs))
+
+	for _, el := range objs {
+		o := WithdrawResponse{
+			Number:      el.Number,
+			Sum:         float64(el.Sum) / model.MoneyAccuracy,
+			ProcessedAt: el.UploadedAt.Format(time.RFC3339),
+		}
+
+		responseArr = append(responseArr, o)
+	}
+
+	return responseArr
 }
 
 //  OrderResponseListFromCanonical makes list of OrderResponse from canonical orders.

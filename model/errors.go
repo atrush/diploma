@@ -10,6 +10,8 @@ var (
 	ErrorOrderExist            = errors.New("order already exist for that user")
 	ErrorConflictSaveUser      = errors.New("user already exist")
 	ErrorItemNotFound          = errors.New("item not found")
+	ErrorNotEnoughFounds       = errors.New("not enough founds ")
+	ErrorWithdrawExist         = errors.New("withdraw already exist for that user")
 )
 
 var _ error = (*ErrorAccrualLimitAchieved)(nil)

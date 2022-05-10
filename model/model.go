@@ -58,3 +58,11 @@ type Accrual struct {
 	Status  AccrualStatus
 	Accrual int
 }
+
+type Withdraw struct {
+	ID         uuid.UUID
+	UserID     uuid.UUID
+	Number     string
+	Sum        int
+	UploadedAt time.Time
+}

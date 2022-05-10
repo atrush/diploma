@@ -5,21 +5,24 @@ import (
 	"github.com/atrush/diploma.git/api/model"
 	"github.com/atrush/diploma.git/services/auth"
 	"github.com/atrush/diploma.git/services/order"
+	"github.com/atrush/diploma.git/services/withdraw"
 	"github.com/google/uuid"
 	"net/http"
 )
 
 type Handler struct {
-	svcAuth  auth.Authenticator
-	svcOrder order.OrderManager
+	svcAuth     auth.Authenticator
+	svcOrder    order.OrderManager
+	svcWithdraw withdraw.WithdrawManager
 }
 
 // NewHandler Return new handler
-func NewHandler(auth auth.Authenticator, order order.OrderManager) (*Handler, error) {
+func NewHandler(auth auth.Authenticator, order order.OrderManager, withdraw withdraw.WithdrawManager) (*Handler, error) {
 
 	return &Handler{
-		svcAuth:  auth,
-		svcOrder: order,
+		svcAuth:     auth,
+		svcOrder:    order,
+		svcWithdraw: withdraw,
 	}, nil
 }
 

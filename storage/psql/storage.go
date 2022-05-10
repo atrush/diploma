@@ -13,6 +13,7 @@ var _ storage.Storage = (*Storage)(nil)
 type Storage struct {
 	orderRepo    *orderRepository
 	userRepo     *userRepository
+	withdrawRepo *withdrawRepository
 	db           *sql.DB
 	conStringDSN string
 }
@@ -43,6 +44,7 @@ func NewStorage(dsn string) (*Storage, error) {
 
 	st.orderRepo = newOrderRepository(db)
 	st.userRepo = newUserRepository(db)
+	st.withdrawRepo = newWithdrawRepository(db)
 
 	return st, nil
 }
@@ -69,6 +71,11 @@ func (s *Storage) User() storage.UserRepository {
 //  Order returns users repository.
 func (s *Storage) Order() storage.OrderRepository {
 	return s.orderRepo
+}
+
+//  Withdraw returns users repository.
+func (s *Storage) Withdraw() storage.WithdrawRepository {
+	return s.withdrawRepo
 }
 
 //  Close  closes database connection.

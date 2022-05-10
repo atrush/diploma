@@ -8,6 +8,7 @@ import (
 	"github.com/atrush/diploma.git/pkg"
 	"github.com/atrush/diploma.git/services/auth"
 	"github.com/atrush/diploma.git/services/order"
+	"github.com/atrush/diploma.git/services/withdraw"
 	"net/http"
 )
 
@@ -15,9 +16,9 @@ type Server struct {
 	httpServer http.Server
 }
 
-func NewServer(cfg *pkg.Config, a auth.Authenticator, o order.OrderManager) (*Server, error) {
+func NewServer(cfg *pkg.Config, a auth.Authenticator, o order.OrderManager, w withdraw.WithdrawManager) (*Server, error) {
 
-	h, err := handler.NewHandler(a, o)
+	h, err := handler.NewHandler(a, o, w)
 	if err != nil {
 		return nil, fmt.Errorf("ошибка запуска server:%w", err)
 	}

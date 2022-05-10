@@ -26,6 +26,8 @@ func NewRouter(handler *Handler) *chi.Mux {
 		r.Use(apimiddleware.MiddlewareAuth)
 		r.Post("/api/user/orders", handler.OrderAddToUser)
 		r.Get("/api/user/orders", handler.OrderGetListForUser)
+		r.Post("/api/user/balance/withdraw", handler.WithdrawAddToUser)
+		r.Get("/api/user/balance/withdrawals", handler.WithdrawsGetListForUser)
 	})
 	//// POST /api/user/orders — загрузка пользователем номера заказа для расчёта;
 	//r.Post("/api/user/orders", handler.Ok)

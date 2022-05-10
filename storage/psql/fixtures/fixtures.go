@@ -16,7 +16,7 @@ func LoadFixtures(ctx context.Context, db *sql.DB) error {
 
 	_, err = db.ExecContext(
 		ctx,
-		"DELETE FROM orders; DELETE FROM users; ",
+		"DELETE FROM orders; DELETE FROM withdraws; DELETE FROM users; ",
 	)
 	if err != nil {
 		return err

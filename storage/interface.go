@@ -13,6 +13,8 @@ type Storage interface {
 	User() UserRepository
 	//  Order returns repository for working with orders.
 	Order() OrderRepository
+	//  Withdraw returns repository for working with withdrawss.
+	Withdraw() WithdrawRepository
 	//  Close closes storage connection.
 	Close()
 }
@@ -38,4 +40,12 @@ type OrderRepository interface {
 	GetUnprocessedOrders(ctx context.Context, limit int) ([]model.Order, error)
 	//  UpdateStatusToNewBatch Updates statuse to new and sets accrual to 0, for batch orders
 	UpdateStatusToNewBatch(ctx context.Context, batch []model.Order) (err error)
+}
+
+type WithdrawRepository interface {
+	//  Create adds new withdraw to user to starage
+	//  checks is enogh founds
+	Create(ctx context.Context, withdraw model.Withdraw) (model.Withdraw, error)
+	//  GetForUser returns user withdrraws
+	GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Withdraw, error)
 }
