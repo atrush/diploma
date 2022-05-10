@@ -23,9 +23,9 @@ func newWithdrawRepository(db *sql.DB) *withdrawRepository {
 }
 
 //  Create implements WithdrawRepository Create interface
-func (r *withdrawRepository) Create(ctx context.Context, withdraw model.Withdraw) (model.Withdraw, error) {
+func (w *withdrawRepository) Create(ctx context.Context, withdraw model.Withdraw) (model.Withdraw, error) {
 	//  init transaction
-	tx, err := r.db.BeginTx(ctx, nil)
+	tx, err := w.db.BeginTx(ctx, nil)
 	if err != nil {
 		return model.Withdraw{}, err
 	}
@@ -128,10 +128,10 @@ func (r *withdrawRepository) Create(ctx context.Context, withdraw model.Withdraw
 }
 
 //  GetForUser implements WithdrawRepository GetForUser interface
-func (s *withdrawRepository) GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Withdraw, error) {
+func (w *withdrawRepository) GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Withdraw, error) {
 	userWithdraws := make([]model.Withdraw, 0)
 
-	rows, err := s.db.QueryContext(ctx,
+	rows, err := w.db.QueryContext(ctx,
 		"SELECT id, user_id, number, uploaded_at, sum FROM withdraws WHERE user_id = $1",
 		userID,
 	)

@@ -24,8 +24,8 @@ func newOrderRepository(db *sql.DB) *orderRepository {
 }
 
 // UpdateStatus implements interface form implements OrderRepository
-func (r *orderRepository) UpdateStatus(ctx context.Context, id uuid.UUID, status model.OrderStatus) error {
-	if _, err := r.db.ExecContext(
+func (o *orderRepository) UpdateStatus(ctx context.Context, id uuid.UUID, status model.OrderStatus) error {
+	if _, err := o.db.ExecContext(
 		ctx,
 		"UPDATE orders SET status = $1 WHERE id = $2",
 		status, id); err != nil {
@@ -36,8 +36,8 @@ func (r *orderRepository) UpdateStatus(ctx context.Context, id uuid.UUID, status
 }
 
 // UpdateAccrual implements interface form implements OrderRepository
-func (r *orderRepository) UpdateAccrual(ctx context.Context, id uuid.UUID, status model.OrderStatus, accrual int) error {
-	if _, err := r.db.ExecContext(
+func (o *orderRepository) UpdateAccrual(ctx context.Context, id uuid.UUID, status model.OrderStatus, accrual int) error {
+	if _, err := o.db.ExecContext(
 		ctx,
 		"UPDATE orders SET status = $1, accrual= $2  WHERE id = $3",
 		status, accrual, id); err != nil {
@@ -48,9 +48,9 @@ func (r *orderRepository) UpdateAccrual(ctx context.Context, id uuid.UUID, statu
 }
 
 //  Create implements OrderRepository Create interface
-func (r *orderRepository) Create(ctx context.Context, order model.Order) (model.Order, error) {
+func (o *orderRepository) Create(ctx context.Context, order model.Order) (model.Order, error) {
 	//  init transaction
-	tx, err := r.db.BeginTx(ctx, nil)
+	tx, err := o.db.BeginTx(ctx, nil)
 	if err != nil {
 		return model.Order{}, err
 	}
@@ -109,10 +109,10 @@ func (r *orderRepository) Create(ctx context.Context, order model.Order) (model.
 }
 
 //  GetForUser implements OrderRepository GetForUser interface
-func (s *orderRepository) GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Order, error) {
+func (o *orderRepository) GetForUser(ctx context.Context, userID uuid.UUID) ([]model.Order, error) {
 	userOrders := make([]model.Order, 0)
 
-	rows, err := s.db.QueryContext(ctx,
+	rows, err := o.db.QueryContext(ctx,
 		"SELECT id, user_id, number, uploaded_at, status, accrual FROM orders WHERE user_id = $1",
 		userID,
 	)
@@ -146,12 +146,12 @@ func (s *orderRepository) GetForUser(ctx context.Context, userID uuid.UUID) ([]m
 	return userOrders, nil
 }
 
-func (s *orderRepository) UpdateStatusToNewBatch(ctx context.Context, batch []model.Order) (err error) {
+func (o *orderRepository) UpdateStatusToNewBatch(ctx context.Context, batch []model.Order) (err error) {
 	if len(batch) == 0 {
 		return nil
 	}
 
-	tx, err := s.db.Begin()
+	tx, err := o.db.Begin()
 	if err != nil {
 		return err
 	}
@@ -177,11 +177,11 @@ func (s *orderRepository) UpdateStatusToNewBatch(ctx context.Context, batch []mo
 	return nil
 }
 
-func (s *orderRepository) GetUnprocessedOrders(ctx context.Context, limit int) ([]model.Order, error) {
+func (o *orderRepository) GetUnprocessedOrders(ctx context.Context, limit int) ([]model.Order, error) {
 	userOrders := make([]model.Order, 0)
 
 	//  init transaction
-	tx, err := s.db.BeginTx(ctx, nil)
+	tx, err := o.db.BeginTx(ctx, nil)
 	if err != nil {
 		return nil, err
 	}
