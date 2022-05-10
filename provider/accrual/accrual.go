@@ -41,10 +41,19 @@ func (a *Accrual) Get(ctx context.Context, number string) (model.Accrual, error)
 	//client := http.Client{}
 	//r, err := client.Do(request)
 	r, err := http.Get(fmt.Sprintf("%s/%s", a.serviceURL, number))
-	log.Println(fmt.Sprintf("%s/%s", a.serviceURL, number))
+	log.Println(fmt.Sprintf("%s/%s %v", a.serviceURL, number, r.StatusCode))
 	if err != nil {
 		return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
 	}
+	resBody, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Println("error processing body")
+		return model.Accrual{}, fmt.Errorf("error processing 429 response from accrual service: %w", err)
+	}
+
+	defer r.Body.Close()
+	log.Println(fmt.Sprintf("%s", resBody))
+	return model.Accrual{}, errors.New("ddd")
 
 	// 200 parse and check response
 	if r.StatusCode == http.StatusOK {
