@@ -68,6 +68,6 @@ type Withdraw struct {
 }
 
 type Balance struct {
-	Accruals    int
+	Actual      int
 	Withdrawals int
 }
