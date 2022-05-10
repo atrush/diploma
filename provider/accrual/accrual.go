@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	model2 "github.com/atrush/diploma.git/api/model"
+	model_api "github.com/atrush/diploma.git/api/model"
 	"github.com/atrush/diploma.git/model"
 	"io"
 	"log"
@@ -29,35 +29,25 @@ func NewAccrual(url string) (*Accrual, error) {
 
 // RequestAccrual
 func (a *Accrual) Get(ctx context.Context, number string) (model.Accrual, error) {
-	//request, err := http.NewRequestWithContext(
-	//	ctx,
-	//	http.MethodGet,
-	//	fmt.Sprintf("%s/%s", a.serviceURL, number),
-	//	nil,
-	//)
-	//if err != nil {
-	//	return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
-	//}
-	//client := http.Client{}
-	//r, err := client.Do(request)
-	r, err := http.Get(fmt.Sprintf("%s/%s", a.serviceURL, number))
-	log.Println(fmt.Sprintf("%s/%s %v", a.serviceURL, number, r.StatusCode))
+	request, err := http.NewRequestWithContext(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("%s/%s", a.serviceURL, number),
+		nil,
+	)
 	if err != nil {
 		return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
 	}
-	resBody, err := io.ReadAll(r.Body)
-	if err != nil {
-		log.Println("error processing body")
-		return model.Accrual{}, fmt.Errorf("error processing 429 response from accrual service: %w", err)
-	}
+	client := http.Client{}
+	r, err := client.Do(request)
 
-	defer r.Body.Close()
-	log.Println(fmt.Sprintf("%s", resBody))
-	return model.Accrual{}, errors.New("ddd")
+	if err != nil {
+		return model.Accrual{}, fmt.Errorf("error accrual request %w", err)
+	}
 
 	// 200 parse and check response
 	if r.StatusCode == http.StatusOK {
-		var respObj model2.AccrualResponse
+		var respObj model_api.AccrualResponse
 
 		decoder := json.NewDecoder(r.Body)
 		defer r.Body.Close()

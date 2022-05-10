@@ -58,6 +58,7 @@ func (o *orderRepository) Create(ctx context.Context, order model.Order) (model.
 
 	defer func() {
 		tx.Rollback()
+
 		//todo: logging if err
 	}()
 

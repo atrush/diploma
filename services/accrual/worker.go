@@ -38,7 +38,7 @@ func NewAccrualService(svc order.OrderManager, svcAcc accrual.AccrualProvider) *
 	return &AccrualService{
 		svcOrders:       svc,
 		client:          svcAcc,
-		producerTimeout: time.Duration(2) * time.Second,
+		producerTimeout: time.Duration(5) * time.Second,
 		limiter:         rate.NewLimiter(rate.Limit(1), 1),
 	}
 }
@@ -101,7 +101,7 @@ loop:
 			perSec := float64(limit.PerMinute) / float64(60)
 			//log.Printf("changesleep %v, per second %v", limit.WaitSeconds, perSec)
 
-			time.Sleep((time.Duration)(2) * time.Second)
+			time.Sleep((time.Duration)(limit.WaitSeconds) * time.Second)
 			s.limiter.SetLimit(rate.Limit(perSec))
 
 			break loop

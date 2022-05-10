@@ -22,9 +22,9 @@ type (
 	}
 
 	AccrualResponse struct {
-		Number  string `json:"order"`
-		Status  string `json:"status"`
-		Accrual int    `json:"accrual,omitempty"`
+		Number  string  `json:"order"`
+		Status  string  `json:"status"`
+		Accrual float64 `json:"accrual,omitempty"`
 	}
 
 	WithdrawRequest struct {
@@ -75,7 +75,7 @@ func (a *AccrualResponse) ToCanonical() (model.Accrual, error) {
 	return model.Accrual{
 		Status:  status,
 		Number:  a.Number,
-		Accrual: a.Accrual * model.MoneyAccuracy,
+		Accrual: int(a.Accrual * float64(model.MoneyAccuracy)),
 	}, nil
 }
 
