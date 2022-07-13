@@ -1,3 +1,6 @@
+mockgen -source="services/auth/interface.go" -destination="services/auth/mock/auth_mock.go" -package=mock
+
+
 # go-musthave-diploma-tpl
 
 Шаблон репозитория для индивидуального дипломного проекта курса "Самостоятельный Go-разработчик"
