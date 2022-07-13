@@ -79,7 +79,7 @@ func (h *Handler) WithdrawAddToUser(w http.ResponseWriter, r *http.Request) {
 
 	withdraw := rWithdraw.ToCanonical(userID)
 
-	withdraw, err = h.svcWithdraw.Create(r.Context(), withdraw)
+	_, err = h.svcWithdraw.Create(r.Context(), withdraw)
 	if err != nil && !errors.Is(err, model.ErrorWithdrawExist) {
 		//  402 if low founds
 		if errors.Is(err, model.ErrorNotEnoughFounds) {
